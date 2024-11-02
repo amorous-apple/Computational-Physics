@@ -1,0 +1,6 @@
+// The following data is used for the time integration in the following format:
+// nbodies max_integration_time integration_step
+2 2.0 0.001
+3 220.0 0.001
+100 2.0 0.01
+1000 2.0 0.01
