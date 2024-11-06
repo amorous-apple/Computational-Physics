@@ -1,4 +1,4 @@
-#include "utils.h"
+#include "calc_accel.h"
 
 Vector* calc_acc(Particle* Collection) {
     Vector* Accel = malloc(params.lineCount * sizeof(Vector));
