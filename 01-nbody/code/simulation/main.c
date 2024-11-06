@@ -1,8 +1,8 @@
 #include <stdio.h>
 
+#include "lib/calc_accel.h"
 #include "lib/constants.h"
 #include "lib/initialize.h"
-#include "lib/utils.h"
 
 Parameters params;
 
