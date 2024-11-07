@@ -61,9 +61,8 @@ Vector* calc_acc(Particle* Collection) {
         exit(EXIT_FAILURE);
     }
     Vector* Force = calc_force(Collection);
-    int n = params.lineCount;
 
-    for (int i = 0; i < n; i++) {
+    for (int i = 0; i < params.lineCount; i++) {
         // Preventing divergence for massless objects
         double invMass = 0;
         if (Collection[i].mass < 1.0E-8) {
@@ -75,7 +74,7 @@ Vector* calc_acc(Particle* Collection) {
         } else {
             invMass = 1 / Collection[i].mass;
 
-            // F = m a => a = F / m
+            // F = m a => a = F / m = (1/m) * F
             Accel[i] = vec_scalProd(invMass, Force[i]);
         }
     }

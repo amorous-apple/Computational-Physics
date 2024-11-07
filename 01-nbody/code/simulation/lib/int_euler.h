@@ -4,6 +4,6 @@
 #include "constants.h"
 #include "calc_accel.h"
 
-Particle* calc_euler(Particle* Collection);
+void calc_euler(Particle* Collection1, Particle* Collection2);
 
 #endif

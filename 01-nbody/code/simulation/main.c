@@ -1,10 +1,12 @@
 #include <stdio.h>
+#include <string.h>
 
+#include "lib/calc_accel.h"
 #include "lib/constants.h"
 #include "lib/initialize.h"
 #include "lib/int_euler.h"
 #include "lib/utils.h"
-#include "utils.h"
+#include "lib/utils_data.h"
 
 Parameters params;
 
@@ -15,34 +17,37 @@ int main(int argc, char* argv[]) {
     start = clock();
 
     def_params(argc, argv);
+
     // Initializaing a collection of data from the file
     Particle* Collection1 = initialize();
     // Initializing an empty collection
     Particle* Collection2 = initialize2();
+    // Collection2 = Collection1 (copying to initialize masses)
+    memcpy(Collection2, Collection1, params.lineCount * sizeof(Particle));
 
     // printf("Test\n");
-    // printf("Filename: %s\n", params.filename);
-    // printf("Fileout: %s\n", params.fileout);
+    Vector* Accel = calc_acc(Collection1);
+    Vector* Force = calc_force(Collection1);
+    for (int i = 0; i < params.lineCount; i++) {
+        printf("f_%ix: %f, f_%iy: %f, f_%iz: %f\n", i + 1, Force[i].x, i + 1,
+               Force[i].y, i + 1, Force[i].z);
+        printf("a_%ix: %f, a_%iy: %f, a_%iz: %f\n", i + 1, Accel[i].x, i + 1,
+               Accel[i].y, i + 1, Accel[i].z);
+    }
 
     remove(params.fileout);
     FILE* fileout = openFileout();
 
     for (int i = 0; i <= params.stepCount; i++) {
         double timeCurrent = 0.0 + i * params.timeStep;
+        // Write the data of every particle to fileout
+        data_write(Collection1, fileout, timeCurrent);
 
-        for (int j = 0; j < params.lineCount; j++) {
-            char dataLine[params.MAX_LINE_LENGTH];
-            snprintf(dataLine, params.MAX_LINE_LENGTH,
-                     "%.8lf,%.8lf,%.8lf,%.8lf,%.8lf, %.8lf, %.8lf\n",
-                     timeCurrent, Collection1[j].x, Collection1[j].y,
-                     Collection1[j].z, Collection1[j].vz, Collection1[j].vy,
-                     Collection1[j].vz);
-            fprintf(fileout, "%s", dataLine);
-        }
-        fprintf(fileout, "\n");
+        // Use Collection1 to write the next set of data to Collection2
+        calc_euler(Collection1, Collection2);
 
-        Collection2 = Collection1;
-        Collection1 = calc_euler(Collection2);
+        // Collection1 = Collection2
+        memcpy(Collection1, Collection2, params.lineCount * sizeof(Particle));
     }
 
     // Ending and printing time measurement to console
