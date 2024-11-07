@@ -4,7 +4,7 @@
 #include <time.h>
 
 #include "constants.h"
-#include "vec_utils.h"
+#include "utils_vec.h"
 
 Vector* calc_force(Particle* Collection);
 Vector* calc_acc(Particle* Collection);

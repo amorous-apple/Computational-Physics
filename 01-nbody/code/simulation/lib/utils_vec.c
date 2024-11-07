@@ -1,4 +1,4 @@
-#include "vec_utils.h"
+#include "utils_vec.h"
 
 // Defining a function for 3D vector addition
 Vector vec_add(Vector vec1, Vector vec2) {

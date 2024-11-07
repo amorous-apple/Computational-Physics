@@ -1,5 +1,5 @@
-#ifndef VEC_UTILS_H
-#define VEC_UTILS_H
+#ifndef UTILS_VEC_H
+#define UTILS_VEC_H
 
 #include <math.h>
 
