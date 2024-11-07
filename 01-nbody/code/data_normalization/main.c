@@ -1,6 +1,3 @@
-#include <stdio.h>
-
-#include "lib/norm_position.h"
 #include "lib/norm_print.h"
 #include "lib/norm_shift.h"
 

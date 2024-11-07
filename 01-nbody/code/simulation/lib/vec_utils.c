@@ -27,10 +27,9 @@ Vector vec_scalProd(double num, Vector vec) {
 }
 
 // Calculating the distance between two vectors
-double vec_separation(Vector vec1, Vector vec2) {
-    double separation =
-        sqrt(pow((vec2.x - vec1.x), 2) + pow((vec2.y - vec1.y), 2) +
-             pow((vec2.x - vec1.x), 2));
+double vec_sepDist(Vector vec1, Vector vec2) {
+    Vector temp = vec_sub(vec1, vec2);
+    double separation = vec_mag(temp);
     return separation;
 }
 
@@ -43,6 +42,6 @@ double vec_mag(Vector vec) {
 // Calculating the unit vector of a vector
 Vector vec_unit(Vector vec) {
     double mag = vec_mag(vec);
-    Vector unit = vec_scalProd(mag, vec);
+    Vector unit = vec_scalProd(1 / mag, vec);
     return unit;
 }

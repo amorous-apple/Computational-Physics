@@ -21,6 +21,7 @@ void shift_data(int argc, char* base_filename) {
     char file_final[100];
     snprintf(file_final, sizeof(file_final), "./data_normalized/%s_normal.csv",
              base_filename);
+    remove(file_final);
     FILE* pfile_f = fopen(file_final, "a");
     if (pfile_f == NULL) {
         printf("File not found!\n");
@@ -36,9 +37,6 @@ void shift_data(int argc, char* base_filename) {
         // Initializing the position and velocity values to calculate new values
         // for every line in the initial file
         double shift_x, shift_y, shift_z, shift_vx, shift_vy, shift_vz = 0;
-// Suppressing warnings caused by suppression of lf format specifier
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wformat"
         if (sscanf(line, "%lf,%lf,%lf,%lf,%lf,%lf,%lf", &pos_x, &pos_y, &pos_z,
                    &vel_x, &vel_y, &vel_z, &mass) == 7) {
             shift_x = pos_x - shift.x;
@@ -52,7 +50,6 @@ void shift_data(int argc, char* base_filename) {
                 pfile_f, "%.15lf,%.15lf,%.15lf,%.15lf,%.15lf,%.15lf,%.15lf\n",
                 shift_x, shift_y, shift_z, shift_vx, shift_vy, shift_vz, mass);
         }
-#pragma GCC diagnostic pop
     }
     printf("A shift of %s.csv has been carried out.\n", base_filename);
     fclose(pfile_i);

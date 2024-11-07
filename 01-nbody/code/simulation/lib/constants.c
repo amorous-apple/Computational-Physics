@@ -2,7 +2,7 @@
 
 const double TIMEMAX = 2.0;
 
-Parameters def_params(int argc, char* argv[]) {
+void def_params(int argc, char* argv[]) {
     if (argc != 4) {
         printf("Invalid number of command line arguments!\n");
         printf(
@@ -10,13 +10,13 @@ Parameters def_params(int argc, char* argv[]) {
             "<timeStep>\n");
         exit(EXIT_FAILURE);
     }
-    Parameters params;
     params.filename = create_filename(argv[1]);
     params.integrator = argv[2];
     params.timeStep = atof(argv[3]);
     params.stepCount = (int)(TIMEMAX / params.timeStep);
     params.lineCount = countLine(params.filename);
-    return params;
+    params.fileout = create_fileout(argv[1], argv[2], argv[3]);
+    params.MAX_LINE_LENGTH = 256;
 }
 
 int calc_secUsed(clock_t start, clock_t end) {
@@ -30,6 +30,14 @@ char* create_filename(char* fileBase) {
              "./../data_normalization/data_normalized/%s_normal.csv", fileBase);
 
     return filename;
+}
+
+char* create_fileout(char* fileBase, char* integrator, char* timeStep) {
+    char* fileout = malloc(200);
+    snprintf(fileout, 200, "./sim_data/%s_%s_%s.csv", fileBase, integrator,
+             timeStep);
+
+    return fileout;
 }
 
 // A function that returns the number of lines in a file
@@ -60,5 +68,6 @@ int countLine(char* filename) {
             break;
         }
     }
+    fclose(pfile);
     return counter;
 }

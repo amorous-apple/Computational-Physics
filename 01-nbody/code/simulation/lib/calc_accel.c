@@ -1,7 +1,11 @@
 #include "calc_accel.h"
 
-Vector* calc_acc(Particle* Collection) {
-    Vector* Accel = malloc(params.lineCount * sizeof(Vector));
+Vector* calc_force(Particle* Collection) {
+    Vector* Force = malloc(params.lineCount * sizeof(Vector));
+    if (Force == NULL) {
+        perror("Error allocating memory for Force!");
+        exit(EXIT_FAILURE);
+    }
     int n = params.lineCount;
 
     for (int i = 0; i < n; i++) {
@@ -16,26 +20,26 @@ Vector* calc_acc(Particle* Collection) {
         pos1.z = Collection[i].z;
 
         for (int j = 0; j < n; j++) {
-            Vector pos2;
-            pos2.x = Collection[j].x;
-            pos2.y = Collection[j].y;
-            pos2.z = Collection[j].z;
-
             // Prevents an object form calculating the force on itself
             if (j == i) {
                 continue;
             }
 
-            Vector separation = vec_sub(pos1, pos2);
+            Vector pos2;
+            pos2.x = Collection[j].x;
+            pos2.y = Collection[j].y;
+            pos2.z = Collection[j].z;
+
             // Sets force to 0 for two particles in the same location
             Vector force;
-            if (vec_mag(separation) < 1.0E-6) {
+            if (vec_sepDist(pos1, pos2) < 1.0E-3) {
                 force.x = 0;
                 force.y = 0;
                 force.z = 0;
             } else {
+                Vector separation = vec_sub(pos1, pos2);
                 Vector unit_sep = vec_unit(separation);
-                double inv_dist = 1 / vec_mag(separation);
+                double inv_dist = 1 / vec_sepDist(pos1, pos2);
                 // G = M = 1
                 // F_G = - (m1 * m2) * (1/ r)^2
                 double force_mag = -(Collection[i].mass * Collection[j].mass) *
@@ -45,10 +49,24 @@ Vector* calc_acc(Particle* Collection) {
 
             force_total = vec_add(force_total, force);
         }
+        Force[i] = force_total;
+    }
+    return Force;
+}
 
+Vector* calc_acc(Particle* Collection) {
+    Vector* Accel = malloc(params.lineCount * sizeof(Vector));
+    if (Accel == NULL) {
+        perror("Error allocating memory for Accel!");
+        exit(EXIT_FAILURE);
+    }
+    Vector* Force = calc_force(Collection);
+    int n = params.lineCount;
+
+    for (int i = 0; i < n; i++) {
         // Preventing divergence for massless objects
         double invMass = 0;
-        if (Collection[i].mass < 1.0E-6) {
+        if (Collection[i].mass < 1.0E-8) {
             Vector accel;
             accel.x = 0;
             accel.y = 0;
@@ -58,7 +76,7 @@ Vector* calc_acc(Particle* Collection) {
             invMass = 1 / Collection[i].mass;
 
             // F = m a => a = F / m
-            Accel[i] = vec_scalProd(invMass, force_total);
+            Accel[i] = vec_scalProd(invMass, Force[i]);
         }
     }
     return Accel;

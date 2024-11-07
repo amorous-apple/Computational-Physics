@@ -1,15 +1,9 @@
 #include "initialize.h"
 
-#include <stdio.h>
-#include <stdlib.h>
-
-#include "constants.h"
-
-Particle* initialize(int argc, char* argv[]) {
-    Parameters params = def_params(argc, argv);
+Particle* initialize(void) {
     FILE* pfile = fopen(params.filename, "r");
     if (ferror(pfile)) {
-        printf("Error opening file. \n");
+        perror("Error opening file. \n");
         exit(EXIT_FAILURE);
     }
 
@@ -17,8 +11,8 @@ Particle* initialize(int argc, char* argv[]) {
 
     // Attempts to allocate necessary memory for all particles in the data
     Particle* Collection = malloc(n * sizeof(Particle));
-    if (!Collection) {
-        printf("Error allocating memory for Collection. \n");
+    if (Collection == NULL) {
+        perror("Error allocating memory for Collection. \n");
         exit(EXIT_FAILURE);
     }
 
@@ -37,4 +31,14 @@ Particle* initialize(int argc, char* argv[]) {
 
     fclose(pfile);
     return Collection;
+}
+
+Particle* initialize2(void) {
+    // Attempts to allocate necessary memory for all particles in the data
+    Particle* Collection2 = malloc(params.lineCount * sizeof(Particle));
+    if (Collection2 == NULL) {
+        perror("Error allocating memory for Collection. \n");
+        exit(EXIT_FAILURE);
+    }
+    return Collection2;
 }
