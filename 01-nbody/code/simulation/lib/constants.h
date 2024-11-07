@@ -26,13 +26,16 @@ typedef struct {
 	double timeStep;
 	int stepCount;
 	int lineCount;
+	char* fileout;
+	int MAX_LINE_LENGTH;
 } Parameters;
 
 extern Parameters params;
 
-Parameters def_params(int argc, char* argv[]);
+void def_params(int argc, char* argv[]);
 int calc_secUsed(clock_t start, clock_t end);
 char* create_filename(char* fileBase);
+char* create_fileout(char* fileBase, char* integrator, char* timeStep);
 int countLine(char* filename);
 
 #endif
