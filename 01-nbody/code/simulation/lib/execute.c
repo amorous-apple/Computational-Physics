@@ -1,0 +1,17 @@
+#include "execute.h"
+
+void choose_integrator(Particle* Collection1, Particle* Collection2) {
+    if (strcmp(params.integrator, "euler") == 0) {
+        calc_euler(Collection1, Collection2);
+    } else if (strcmp(params.integrator, "eulercrom") == 0) {
+        calc_eulercrom(Collection1, Collection2);
+    } else if (strcmp(params.integrator, "mid") == 0) {
+        calc_eulercrom(Collection1, Collection2);
+    } else if (strcmp(params.integrator, "velver") == 0) {
+        calc_velverl(Collection1, Collection2);
+    } else {
+        printf("Invalid integrator. Try again m9\n");
+        printf("Valid options include: 'euler', 'eulercrom', 'mid', 've'\n");
+        exit(EXIT_FAILURE);
+    }
+}

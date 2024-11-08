@@ -16,6 +16,7 @@ void def_params(int argc, char* argv[]) {
     params.stepCount = (int)(TIMEMAX / params.timeStep);
     params.lineCount = countLine(params.filename);
     params.fileout = create_fileout(argv[1], argv[2], argv[3]);
+    params.fileout2 = create_fileout2(argv[1], argv[2], argv[3]);
     params.MAX_LINE_LENGTH = 256;
 }
 
@@ -32,12 +33,22 @@ char* create_filename(char* fileBase) {
     return filename;
 }
 
+// Creating the string to write data about the system
 char* create_fileout(char* fileBase, char* integrator, char* timeStep) {
     char* fileout = malloc(200);
-    snprintf(fileout, 200, "./sim_data/%s_%s_%s.csv", fileBase, integrator,
-             timeStep);
+    snprintf(fileout, 200, "./sim_data/data_system/%s_%s_%s.csv", fileBase,
+             integrator, timeStep);
 
     return fileout;
+}
+
+// Creating the string to write data calculated from the system
+char* create_fileout2(char* fileBase, char* integrator, char* timeStep) {
+    char* fileout2 = malloc(200);
+    snprintf(fileout2, 200, "./sim_data/data_calc/%s_%s_%s_calc.csv", fileBase,
+             integrator, timeStep);
+
+    return fileout2;
 }
 
 // A function that returns the number of lines in a file
