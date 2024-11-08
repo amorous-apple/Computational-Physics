@@ -26,14 +26,14 @@ int main(int argc, char* argv[]) {
     memcpy(Collection2, Collection1, params.lineCount * sizeof(Particle));
 
     // printf("Test\n");
-    Vector* Accel = calc_acc(Collection1);
-    Vector* Force = calc_force(Collection1);
-    for (int i = 0; i < params.lineCount; i++) {
-        printf("f_%ix: %f, f_%iy: %f, f_%iz: %f\n", i + 1, Force[i].x, i + 1,
-               Force[i].y, i + 1, Force[i].z);
-        printf("a_%ix: %f, a_%iy: %f, a_%iz: %f\n", i + 1, Accel[i].x, i + 1,
-               Accel[i].y, i + 1, Accel[i].z);
-    }
+    // Vector* Accel = calc_acc(Collection1);
+    // Vector* Force = calc_force(Collection1);
+    // for (int i = 0; i < params.lineCount; i++) {
+    //     printf("f_%ix: %f, f_%iy: %f, f_%iz: %f\n", i + 1, Force[i].x, i + 1,
+    //            Force[i].y, i + 1, Force[i].z);
+    //     printf("a_%ix: %f, a_%iy: %f, a_%iz: %f\n", i + 1, Accel[i].x, i + 1,
+    //            Accel[i].y, i + 1, Accel[i].z);
+    // }
 
     remove(params.fileout);
     FILE* fileout = openFileout();
@@ -43,12 +43,16 @@ int main(int argc, char* argv[]) {
         // Write the data of every particle to fileout
         data_write(Collection1, fileout, timeCurrent);
 
-        // Use Collection1 to write the next set of data to Collection2
-        calc_euler(Collection1, Collection2);
+        // Use Collection1 to write the next set of data
+        calc_euler(Collection1);
 
-        // Collection1 = Collection2
-        memcpy(Collection1, Collection2, params.lineCount * sizeof(Particle));
+        // // Collection1 = Collection2
+        // memcpy(Collection1, Collection2, params.lineCount *
+        // sizeof(Particle));
     }
+
+    free(Collection1);
+    free(Collection2);
 
     // Ending and printing time measurement to console
     end = clock();

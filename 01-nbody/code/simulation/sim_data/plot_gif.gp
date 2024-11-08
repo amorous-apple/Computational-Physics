@@ -1,13 +1,16 @@
-set terminal gif animate delay 5
+set term gif animate delay 2 size 400, 400
 set output "animation.gif"
+set datafile separator ","
+
+stats '3body_1_0.01.csv' us 2 name "x"
 
 set xlabel "x"
 set ylabel "y"
 set zlabel "z"
-set xrange [-1:1]
-set yrange [-1:1]
-set zrange [-1:1]
+set xrange [-2:2]
+set yrange [-2:2]
+set zrange [-2:2]
 
-do for [i=0:200] {
-	splot '2body_2_0.01.csv' index i using 2:3:4 with points pointtype 7 title sprintf("t: %.4f", i * 0.01)
+do for [i=0:int(x_blocks-2)] {
+	splot '3body_1_0.01.csv' us 2:3:4 index i w p pt 7 title "t: ".(i)
 }
