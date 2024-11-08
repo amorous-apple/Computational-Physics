@@ -2,10 +2,10 @@
 #include <stdio.h>
 #include <string.h>
 
+#include "lib/calc_angmoment.h"
 #include "lib/constants.h"
+#include "lib/execute.h"
 #include "lib/initialize.h"
-#include "lib/int_euler.h"
-#include "lib/utils.h"
 #include "lib/utils_data.h"
 
 Parameters params;
@@ -37,18 +37,24 @@ int main(int argc, char* argv[]) {
 
     remove(params.fileout);
     FILE* fileout = openFileout();
+    remove(params.fileout2);
+    FILE* fileout2 = openFileout2();
 
     for (int i = 0; i <= params.stepCount; i++) {
         double timeCurrent = 0.0 + i * params.timeStep;
         // Write the data of every particle to fileout
         data_write(Collection1, fileout, timeCurrent);
 
-        // Use Collection1 to write the next set of data
-        calc_euler(Collection1);
+        // Use Collection1 to write the next set of data to Collection2
+        choose_integrator(Collection1, Collection2);
 
-        // // Collection1 = Collection2
-        // memcpy(Collection1, Collection2, params.lineCount *
-        // sizeof(Particle));
+        // Collection1 = Collection2
+        memcpy(Collection1, Collection2, params.lineCount * sizeof(Particle));
+
+        // Calculating and writing the angular moment to fileout2
+        Vector angmoment = calc_angmoment(Collection1);
+        double mag_angmoment = vec_mag(angmoment);
+        data_write2(mag_angmoment, fileout2, timeCurrent);
     }
 
     free(Collection1);

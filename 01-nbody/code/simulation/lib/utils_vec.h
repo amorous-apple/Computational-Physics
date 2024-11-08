@@ -11,5 +11,6 @@ Vector vec_scalProd(double num, Vector vec);
 double vec_sepDist(Vector vec1, Vector vec2);
 double vec_mag(Vector vec);
 Vector vec_unit(Vector vec);
+Vector vec_cross(Vector vec1, Vector vec2);
 
 #endif

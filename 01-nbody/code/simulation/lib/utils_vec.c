@@ -45,3 +45,12 @@ Vector vec_unit(Vector vec) {
     Vector unit = vec_scalProd(1 / mag, vec);
     return unit;
 }
+
+// Calculating the cross product of two vectors
+Vector vec_cross(Vector vec1, Vector vec2) {
+    Vector cross;
+    cross.x = vec1.y * vec2.z - vec1.z * vec2.y;
+    cross.y = vec1.z * vec2.x - vec1.x * vec2.z;
+    cross.z = vec1.x * vec2.y - vec1.y * vec2.x;
+    return cross;
+}
