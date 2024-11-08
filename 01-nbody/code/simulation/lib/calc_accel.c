@@ -8,6 +8,7 @@ Vector* calc_force(Particle* Collection) {
     }
     int n = params.lineCount;
 
+#pragma omp parallel for
     for (int i = 0; i < n; i++) {
         Vector force_total;
         force_total.x = 0;
@@ -62,6 +63,7 @@ Vector* calc_acc(Particle* Collection) {
     }
     Vector* Force = calc_force(Collection);
 
+    // #pragma omp parallel for
     for (int i = 0; i < params.lineCount; i++) {
         // Preventing divergence for massless objects
         double invMass = 0;

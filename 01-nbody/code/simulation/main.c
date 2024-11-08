@@ -1,7 +1,7 @@
+#include <omp.h>
 #include <stdio.h>
 #include <string.h>
 
-#include "lib/calc_accel.h"
 #include "lib/constants.h"
 #include "lib/initialize.h"
 #include "lib/int_euler.h"
