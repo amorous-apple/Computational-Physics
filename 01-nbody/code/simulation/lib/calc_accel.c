@@ -20,7 +20,7 @@ Vector* calc_force(Particle* Collection) {
         pos1.z = Collection[i].z;
 
         for (int j = 0; j < n; j++) {
-            // Prevents an object form calculating the force on itself
+            // Preventing an object form calculating the force on itself
             if (j == i) {
                 continue;
             }
@@ -30,20 +30,20 @@ Vector* calc_force(Particle* Collection) {
             pos2.y = Collection[j].y;
             pos2.z = Collection[j].z;
 
-            // Sets force to 0 for two particles in the same location
+            // Setting force to 0 for two particles in the same location
             Vector force;
             if (vec_sepDist(pos1, pos2) < 1.0E-3) {
                 force.x = 0;
                 force.y = 0;
                 force.z = 0;
             } else {
-                Vector separation = vec_sub(pos1, pos2);
-                Vector unit_sep = vec_unit(separation);
                 double inv_dist = 1 / vec_sepDist(pos1, pos2);
                 // G = M = 1
                 // F_G = - (m1 * m2) * (1/ r)^2
                 double force_mag = -(Collection[i].mass * Collection[j].mass) *
                                    pow(inv_dist, 2);
+                Vector separation = vec_sub(pos1, pos2);
+                Vector unit_sep = vec_unit(separation);
                 force = vec_scalProd(force_mag, unit_sep);
             }
 
@@ -78,5 +78,6 @@ Vector* calc_acc(Particle* Collection) {
             Accel[i] = vec_scalProd(invMass, Force[i]);
         }
     }
+    free(Force);
     return Accel;
 }
