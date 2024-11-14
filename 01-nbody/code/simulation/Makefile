@@ -7,7 +7,7 @@ EXEC = simulate
 BUILD_DIR = build
 
 # List of source files and corresponding object files in the build directory
-SRC = main.c $(wildcard lib/*.c)
+SRC = main.c $(wildcard lib/*.c) $(wildcard lib/integrators/*.c)
 OBJ = $(patsubst %.c, $(BUILD_DIR)/%.o, $(SRC))
 
 # Default rule to create the executable
@@ -22,4 +22,3 @@ $(BUILD_DIR)/%.o: %.c
 # Clean up build files
 clean:
 	rm -rf $(BUILD_DIR) $(EXEC)
-
