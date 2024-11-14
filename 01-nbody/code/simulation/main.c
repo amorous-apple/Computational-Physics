@@ -63,5 +63,5 @@ int main(int argc, char* argv[]) {
     // Ending and printing time measurement to console
     end = clock();
     secUsed = calc_secUsed(start, end);
-    printf("Program took: %f seconds \n", secUsed);
+    printf("Program took: %f CPU clock seconds \n", secUsed);
 }
