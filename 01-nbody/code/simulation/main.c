@@ -3,6 +3,7 @@
 #include <string.h>
 
 #include "lib/calc_angmoment.h"
+#include "lib/calc_ener.h"
 #include "lib/constants.h"
 #include "lib/execute.h"
 #include "lib/initialize.h"
@@ -25,20 +26,10 @@ int main(int argc, char* argv[]) {
     // Collection2 = Collection1 (copying to initialize masses)
     memcpy(Collection2, Collection1, params.lineCount * sizeof(Particle));
 
-    // printf("Test\n");
-    // Vector* Accel = calc_acc(Collection1);
-    // Vector* Force = calc_force(Collection1);
-    // for (int i = 0; i < params.lineCount; i++) {
-    //     printf("f_%ix: %f, f_%iy: %f, f_%iz: %f\n", i + 1, Force[i].x, i + 1,
-    //            Force[i].y, i + 1, Force[i].z);
-    //     printf("a_%ix: %f, a_%iy: %f, a_%iz: %f\n", i + 1, Accel[i].x, i + 1,
-    //            Accel[i].y, i + 1, Accel[i].z);
-    // }
-
     remove(params.fileout);
     FILE* fileout = openFileout();
-    remove(params.fileout2);
-    FILE* fileout2 = openFileout2();
+    remove(params.fileoutCalc);
+    FILE* fileoutCalc = openFileoutCalc();
 
     for (int i = 0; i <= params.stepCount; i++) {
         double timeCurrent = 0.0 + i * params.timeStep;
@@ -51,10 +42,15 @@ int main(int argc, char* argv[]) {
         // Collection1 = Collection2
         memcpy(Collection1, Collection2, params.lineCount * sizeof(Particle));
 
-        // Calculating and writing the angular moment to fileout2
+        // Calculating the angular moment of the system
         Vector angmoment = calc_angmoment(Collection1);
         double mag_angmoment = vec_mag(angmoment);
-        data_write2(mag_angmoment, fileout2, timeCurrent);
+
+        // Calculating the energy of the system
+        double energy = calc_ener(Collection1);
+
+        // Writing the calculated data for the time step to fileoutCalc
+        data_writeCalc(mag_angmoment, energy, fileoutCalc, timeCurrent);
     }
 
     free(Collection1);

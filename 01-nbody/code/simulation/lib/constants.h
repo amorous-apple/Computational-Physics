@@ -27,7 +27,7 @@ typedef struct {
 	int stepCount;
 	int lineCount;
 	char* fileout;
-	char* fileout2;
+	char* fileoutCalc;
 	int MAX_LINE_LENGTH;
 } Parameters;
 
@@ -37,7 +37,7 @@ void def_params(int argc, char* argv[]);
 int calc_secUsed(clock_t start, clock_t end);
 char* create_filename(char* fileBase);
 char* create_fileout(char* fileBase, char* integrator, char* timeStep);
-char* create_fileout2(char* fileBase, char* integrator, char* timeStep);
+char* create_fileoutCalc(char* fileBase, char* integrator, char* timeStep);
 int countLine(char* filename);
 
 #endif

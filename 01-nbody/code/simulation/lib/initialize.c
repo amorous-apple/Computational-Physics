@@ -7,10 +7,8 @@ Particle* initialize(void) {
         exit(EXIT_FAILURE);
     }
 
-    int n = params.lineCount;
-
     // Attempts to allocate necessary memory for all particles in the data
-    Particle* Collection = malloc(n * sizeof(Particle));
+    Particle* Collection = malloc(params.lineCount * sizeof(Particle));
     if (Collection == NULL) {
         perror("Error allocating memory for Collection1. \n");
         exit(EXIT_FAILURE);
