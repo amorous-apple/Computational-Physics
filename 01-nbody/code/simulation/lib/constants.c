@@ -1,6 +1,6 @@
 #include "constants.h"
 
-const double TIMEMAX = 20.0;
+const double TIMEMAX = 10;
 
 void def_params(int argc, char* argv[]) {
     if (argc != 4) {
@@ -16,7 +16,7 @@ void def_params(int argc, char* argv[]) {
     params.stepCount = (int)(TIMEMAX / params.timeStep);
     params.lineCount = countLine(params.filename);
     params.fileout = create_fileout(argv[1], argv[2], argv[3]);
-    params.fileout2 = create_fileout2(argv[1], argv[2], argv[3]);
+    params.fileoutCalc = create_fileoutCalc(argv[1], argv[2], argv[3]);
     params.MAX_LINE_LENGTH = 256;
 }
 
@@ -43,12 +43,12 @@ char* create_fileout(char* fileBase, char* integrator, char* timeStep) {
 }
 
 // Creating the string to write data calculated from the system
-char* create_fileout2(char* fileBase, char* integrator, char* timeStep) {
-    char* fileout2 = malloc(200);
-    snprintf(fileout2, 200, "./sim_data/data_calc/%s_%s_%s_calc.csv", fileBase,
-             integrator, timeStep);
+char* create_fileoutCalc(char* fileBase, char* integrator, char* timeStep) {
+    char* fileoutCalc = malloc(200);
+    snprintf(fileoutCalc, 200, "./sim_data/data_calc/%s_%s_%s_calc.csv",
+             fileBase, integrator, timeStep);
 
-    return fileout2;
+    return fileoutCalc;
 }
 
 // A function that returns the number of lines in a file

@@ -10,15 +10,16 @@ void data_write(Particle* Collection1, FILE* pdstfile, float timeCurrent) {
                  Collection1[i].vx, Collection1[i].vy, Collection1[i].vz);
         fprintf(pdstfile, "%s", dataLine);
     }
-    // Add an empty line at the end of one time block
+    // Add two empty lines at the end of a time block
     fprintf(pdstfile, "\n\n");
 }
 
-// Writing the calculated angular moment of the system at a time point
-void data_write2(double angmoment, FILE* pdstfile2, float timeCurrent) {
+// Writing the calculated data of the system at a time point
+void data_writeCalc(double angmoment, double energy, FILE* pdstfile2,
+                    float timeCurrent) {
     char dataLine[params.MAX_LINE_LENGTH];
-    snprintf(dataLine, params.MAX_LINE_LENGTH, "%.4lf,%.8lf\n", timeCurrent,
-             angmoment);
+    snprintf(dataLine, params.MAX_LINE_LENGTH, "%.4lf,%.8lf,%.8lf\n",
+             timeCurrent, angmoment, energy);
     fprintf(pdstfile2, "%s", dataLine);
 }
 
@@ -47,8 +48,8 @@ FILE* openFileout(void) {
     return pfile;
 }
 // Opening fileout for writing data calculated about the system
-FILE* openFileout2(void) {
-    FILE* pfile2 = fopen(params.fileout2, "a");
+FILE* openFileoutCalc(void) {
+    FILE* pfile2 = fopen(params.fileoutCalc, "a");
     if (pfile2 == NULL) {
         perror("Error opening output file.\n");
         exit(EXIT_FAILURE);

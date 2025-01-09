@@ -1,4 +1,5 @@
 *.data
+*.csv
 *.aux
 *.fdb_latexmk
 *.fls

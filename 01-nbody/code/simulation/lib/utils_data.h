@@ -3,10 +3,10 @@
 
 #include "constants.h"
 
-void data_write(Particle* Collection1, FILE* pdstfile, float timeCurrent);
-void data_write2(double angmoment, FILE* pdstfile2, float timeCurrent);
 void data_read(Particle* Collection, FILE* psrcfile);
+void data_write(Particle* Collection1, FILE* pdstfile, float timeCurrent);
+void data_writeCalc(double angmoment, double energy, FILE* pdstfile2, float timeCurrent);
 FILE* openFileout(void);
-FILE* openFileout2(void);
+FILE* openFileoutCalc(void);
 
 #endif
