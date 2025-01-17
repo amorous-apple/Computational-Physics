@@ -43,4 +43,9 @@ int main() {
     printf("Initial field\n");
     fillField(rodsH, numH, rodsV, numV, occupancyField);
     printField(occupancyField);
+
+    free(rodsH);
+    free(rodsV);
+    free(occupancyField[0]);
+    free(occupancyField);
 }

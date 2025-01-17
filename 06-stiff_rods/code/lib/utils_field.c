@@ -45,9 +45,9 @@ int testRod(Position rodPosition, char rodType, int **field) {
 // Placing a single rod into a field
 void placeRod(Position rodPosition, char rodType, int **field) {
     if (!testRod(rodPosition, rodType, field)) {
-        printf("Invalid %c rod placement at (%d,%d)\n", rodType,
-               rodPosition.posX, rodPosition.posY);
-        exit(EXIT_FAILURE);
+        // printf("Invalid %c rod placement at (%d,%d)\n", rodType,
+        //        rodPosition.posX, rodPosition.posY);
+        // exit(EXIT_FAILURE);
     }
     if (rodType == 'h') {
         for (int j = 0; j < ROD_SIZE; j++) {
