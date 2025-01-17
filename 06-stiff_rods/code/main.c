@@ -47,6 +47,10 @@ int main() {
     fillField(rodsH, numH, rodsV, numV, occupancyField);
     printField(occupancyField);
 
+    delRod(rodsH, numH, rodsV, numV, occupancyField);
+    printf("Deleted field\n");
+    printField(occupancyField);
+
     free(rodsH);
     free(rodsV);
     free(occupancyField[0]);
