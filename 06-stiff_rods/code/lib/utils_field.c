@@ -6,13 +6,13 @@ void printField(int **field) {
         for (int j = 0; j < SYSTEM_SIZE; j++) {
             switch (field[i][j]) {
                 case 0:
-                    printf("0 ");
+                    printf(". ");
                     break;
                 case 1:
                     printf("< ");
                     break;
                 case 2:
-                    printf("- ");
+                    printf("─ ");
                     break;
                 case 3:
                     printf("> ");
@@ -84,6 +84,9 @@ int placeRod(Position rodPosition, char rodType, int **field) {
         for (int j = 1; j < ROD_SIZE - 1; j++) {
             field[mVal][nVal] = 2;
             nVal++;
+            if (nVal > SYSTEM_SIZE - 1) {
+                nVal -= SYSTEM_SIZE;
+            }
             // Periodic boundary conditions
             if (nVal > SYSTEM_SIZE - 1) {
                 nVal -= SYSTEM_SIZE;
@@ -96,6 +99,9 @@ int placeRod(Position rodPosition, char rodType, int **field) {
         int mVal = SYSTEM_SIZE - 1 - rodPosition.posY;
         field[mVal][nVal] = -1;
         mVal--;
+        if (mVal < 0) {
+            mVal += SYSTEM_SIZE;
+        }
         for (int j = 1; j < ROD_SIZE - 1; j++) {
             field[mVal][nVal] = -2;
             mVal--;
@@ -134,6 +140,7 @@ int **delRod(Position *rodsH, int *numH, Position *rodsV, int *numV,
              int **field) {
     int numRods = *numH + *numV;
     int randID = (rand() % numRods);
+    printf("randID: %d\n", randID);
 
     if (randID <= *numH - 1) {
         for (int i = randID; i < *numH - 1; i++) {
@@ -141,6 +148,7 @@ int **delRod(Position *rodsH, int *numH, Position *rodsV, int *numV,
         }
         (*numH)--;
     } else {
+        randID -= *numH;
         for (int i = randID; i < *numV - 1; i++) {
             rodsV[i] = rodsV[i + 1];
         }

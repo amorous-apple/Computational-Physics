@@ -11,10 +11,15 @@ int randomBit(double p) {
 }
 
 double alphaDel(int numRods) {
-    return ((double)numRods / 2.0 * SYSTEM_SIZE * SYSTEM_SIZE *
-            exp(-BETA * MU));
+    double probability =
+        ((double)numRods / 2.0 * SYSTEM_SIZE * SYSTEM_SIZE * exp(-BETA * MU));
+    return probability > 1 ? 1.0 : probability;
 }
 
 double alphaIns(int numRods) {
-    return (2.0 * numRods * numRods / (SYSTEM_SIZE + 1.0) * exp(BETA * MU));
+    double probability =
+        (2.0 * numRods * numRods / (SYSTEM_SIZE + 1.0) * exp(BETA * MU));
+    return probability > 1 ? 1.0 : probability;
 }
+
+int randomCoord() { return rand() % SYSTEM_SIZE; }
