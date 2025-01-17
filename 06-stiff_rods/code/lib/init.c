@@ -12,7 +12,7 @@ void init() {
 int **init_occupancyField() {
     int **occupancyField = malloc(SYSTEM_SIZE * sizeof(int *));
     if (occupancyField == NULL) {
-        perror("Error allocating memor for occupancyField\n");
+        perror("Error allocating memory for occupancyField\n");
         exit(EXIT_FAILURE);
     }
     int *intArr = malloc(SYSTEM_SIZE * SYSTEM_SIZE * sizeof(int));
