@@ -4,6 +4,9 @@ const int SYSTEM_SIZE = 5;
 const int ROD_SIZE = 3;
 const double ACTIVITY = 0.56;
 
+const double BETA = 1.0;
+const double MU = 1.0;
+
 void init() {
     printf("System size: %d\n", SYSTEM_SIZE);
     printf("Activity: %lf\n", ACTIVITY);
