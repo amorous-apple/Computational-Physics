@@ -1,15 +1,15 @@
 #include <stdio.h>
+#include <time.h>
 
 #include "lib/init.h"
 #include "lib/utils_field.h"
 #include "stdlib.h"
-#include <time.h>
 
 int main() {
     // init();
-    
-    srand(time(NULL)); //sets random seed
-    
+
+    srand(time(NULL));  // sets random seed
+
     int MAX_RODS = (SYSTEM_SIZE * SYSTEM_SIZE / ROD_SIZE) + 1;
 
     Position *rodsH = malloc(MAX_RODS * sizeof(Position));
@@ -43,13 +43,17 @@ int main() {
     int **occupancyField = init_occupancyField();
     // printField(occupancyField);
 
-    printf("Initial field\n");
+    printf("Rods: %d\n", numH + numV);
     fillField(rodsH, numH, rodsV, numV, occupancyField);
     printField(occupancyField);
 
-    delRod(rodsH, numH, rodsV, numV, occupancyField);
-    printf("Deleted field\n");
-    printField(occupancyField);
+    int startingRods = numH + numV;
+
+    for (int i = 0; i < startingRods; i++) {
+        delRod(rodsH, &numH, rodsV, &numV, occupancyField);
+        printf("Rods: %d\n", numH + numV);
+        printField(occupancyField);
+    }
 
     free(rodsH);
     free(rodsV);

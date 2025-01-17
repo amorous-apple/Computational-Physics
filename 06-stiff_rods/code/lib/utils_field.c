@@ -130,24 +130,24 @@ void fillField(Position *rodsH, int numH, Position *rodsV, int numV,
 }
 
 // Deleting a random rod from the field
-int **delRod(Position *rodsH, int numH, Position *rodsV, int numV,
+int **delRod(Position *rodsH, int *numH, Position *rodsV, int *numV,
              int **field) {
-    int numRods = numH + numV;
+    int numRods = *numH + *numV;
     int randID = (rand() % numRods);
 
-    if (randID <= numH - 1) {
-        for (int i = randID; i < numH - 1; i++) {
+    if (randID <= *numH - 1) {
+        for (int i = randID; i < *numH - 1; i++) {
             rodsH[i] = rodsH[i + 1];
         }
-        numH--;
+        (*numH)--;
     } else {
-        for (int i = randID; i < numV - 1; i++) {
+        for (int i = randID; i < *numV - 1; i++) {
             rodsV[i] = rodsV[i + 1];
         }
-        numV--;
+        (*numV)--;
     }
 
-    fillField(rodsH, numH, rodsV, numV, field);
+    fillField(rodsH, *numH, rodsV, *numV, field);
 
     return field;
 }
