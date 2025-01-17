@@ -4,7 +4,29 @@
 void printField(int **field) {
     for (int i = 0; i < SYSTEM_SIZE; i++) {
         for (int j = 0; j < SYSTEM_SIZE; j++) {
-            printf("%d ", field[i][j]);
+            switch (field[i][j]) {
+                case 0:
+                    printf("0 ");
+                    break;
+                case 1:
+                    printf("< ");
+                    break;
+                case 2:
+                    printf("- ");
+                    break;
+                case 3:
+                    printf("> ");
+                    break;
+                case -1:
+                    printf("v ");
+                    break;
+                case -2:
+                    printf("| ");
+                    break;
+                case -3:
+                    printf("^ ");
+                    break;
+            }
         }
         printf("\n");
     }
@@ -28,9 +50,10 @@ int testRod(Position rodPosition, char rodType, int **field) {
         }
         return 1;
     } else if (rodType == 'v') {
+        int nVal = rodPosition.posX;
+        int mVal = SYSTEM_SIZE - 1 - rodPosition.posY;
         for (int i = 0; i < ROD_SIZE; i++) {
-            int nVal = rodPosition.posX;
-            int mVal = SYSTEM_SIZE - 1 - rodPosition.posY - i;
+            mVal--;
             // Periodic boundary conditions
             if (mVal < 0) {
                 mVal += SYSTEM_SIZE;
@@ -54,26 +77,34 @@ int placeRod(Position rodPosition, char rodType, int **field) {
         return 0;
     }
     if (rodType == 'h') {
-        for (int j = 0; j < ROD_SIZE; j++) {
-            int nVal = rodPosition.posX + j;
+        int nVal = rodPosition.posX;
+        int mVal = SYSTEM_SIZE - 1 - rodPosition.posY;
+        field[mVal][nVal] = 1;
+        nVal++;
+        for (int j = 1; j < ROD_SIZE - 1; j++) {
+            field[mVal][nVal] = 2;
+            nVal++;
             // Periodic boundary conditions
             if (nVal > SYSTEM_SIZE - 1) {
                 nVal -= SYSTEM_SIZE;
             }
-            int mVal = SYSTEM_SIZE - 1 - rodPosition.posY;
-            field[mVal][nVal] = 1;
         }
+        field[mVal][nVal] = 3;
         return 1;
     } else if (rodType == 'v') {
-        for (int j = 0; j < ROD_SIZE; j++) {
-            int nVal = rodPosition.posX;
-            int mVal = SYSTEM_SIZE - 1 - rodPosition.posY - j;
+        int nVal = rodPosition.posX;
+        int mVal = SYSTEM_SIZE - 1 - rodPosition.posY;
+        field[mVal][nVal] = -1;
+        mVal--;
+        for (int j = 1; j < ROD_SIZE - 1; j++) {
+            field[mVal][nVal] = -2;
+            mVal--;
             // Periodic boundary conditions
             if (mVal < 0) {
                 mVal += SYSTEM_SIZE;
             }
-            field[mVal][nVal] = -1;
         }
+        field[mVal][nVal] = -3;
         return 1;
     } else {
         printf("Invalid rodType of %c\n!", rodType);
