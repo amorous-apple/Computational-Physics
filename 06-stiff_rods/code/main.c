@@ -3,10 +3,13 @@
 #include "lib/init.h"
 #include "lib/utils_field.h"
 #include "stdlib.h"
+#include <time.h>
 
 int main() {
     // init();
-
+    
+    srand(time(NULL)); //sets random seed
+    
     int MAX_RODS = (SYSTEM_SIZE * SYSTEM_SIZE / ROD_SIZE) + 1;
 
     Position *rodsH = malloc(MAX_RODS * sizeof(Position));
