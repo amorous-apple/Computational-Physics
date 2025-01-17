@@ -39,7 +39,6 @@ int testRod(Position rodPosition, char rodType, int **field) {
         int mVal = SYSTEM_SIZE - 1 - rodPosition.posY;
         int nVal = rodPosition.posX;
         for (int i = 0; i < ROD_SIZE; i++) {
-            nVal++;
             // Periodic boundary conditions
             if (nVal > SYSTEM_SIZE - 1) {
                 nVal -= SYSTEM_SIZE;
@@ -47,13 +46,13 @@ int testRod(Position rodPosition, char rodType, int **field) {
             if (field[mVal][nVal] != 0) {
                 return 0;
             }
+            nVal++;
         }
         return 1;
     } else if (rodType == 'v') {
         int nVal = rodPosition.posX;
         int mVal = SYSTEM_SIZE - 1 - rodPosition.posY;
         for (int i = 0; i < ROD_SIZE; i++) {
-            mVal--;
             // Periodic boundary conditions
             if (mVal < 0) {
                 mVal += SYSTEM_SIZE;
@@ -61,6 +60,7 @@ int testRod(Position rodPosition, char rodType, int **field) {
             if (field[mVal][nVal] != 0) {
                 return 0;
             }
+            mVal--;
         }
         return 1;
     } else {
@@ -127,4 +127,27 @@ void fillField(Position *rodsH, int numH, Position *rodsV, int numV,
     for (int i = 0; i < numV; i++) {
         placeRod(rodsV[i], 'v', field);
     }
+}
+
+// Deleting a random rod from the field
+int **delRod(Position *rodsH, int numH, Position *rodsV, int numV,
+             int **field) {
+    int numRods = numH + numV;
+    int randID = (rand() % numRods);
+
+    if (randID <= numH - 1) {
+        for (int i = randID; i < numH - 1; i++) {
+            rodsH[i] = rodsH[i + 1];
+        }
+        numH--;
+    } else {
+        for (int i = randID; i < numV - 1; i++) {
+            rodsV[i] = rodsV[i + 1];
+        }
+        numV--;
+    }
+
+    fillField(rodsH, numH, rodsV, numV, field);
+
+    return field;
 }
