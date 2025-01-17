@@ -25,16 +25,16 @@ int main() {
 
     // int countTotal = numH + numV;
 
-    rodsH[0].posX = 0;
-    rodsH[0].posY = 0;
+    rodsH[0].posX = 3;
+    rodsH[0].posY = 1;
     rodsH[1].posX = 2;
     rodsH[1].posY = 4;
     numH = 2;
 
-    rodsV[0].posX = 3;
-    rodsV[0].posY = 0;
-    rodsV[1].posX = 4;
-    rodsV[1].posY = 3;
+    rodsV[0].posX = 0;
+    rodsV[0].posY = 3;
+    rodsV[1].posX = 1;
+    rodsV[1].posY = 2;
     numV = 2;
 
     int **occupancyField = init_occupancyField();
