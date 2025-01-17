@@ -11,6 +11,8 @@
 int fiftyFifty(void);
 int randomBit(double p);
 double alphaDel(int numRods);
+double alphaIns(int numRods);
+int randomCoord();
 
 
 #endif
