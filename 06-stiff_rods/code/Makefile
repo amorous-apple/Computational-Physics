@@ -3,7 +3,7 @@ CFLAGS = -Wall -Wextra -fopenmp -g
 LDFLAGS = -lm -fopenmp
 
 # Define the executable name and build directory
-EXEC = stiffy
+EXEC = stiffy.out
 BUILD_DIR = build
 
 # List of source files and corresponding object files in the build directory
