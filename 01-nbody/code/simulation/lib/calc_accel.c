@@ -83,3 +83,72 @@ Vector* calc_acc(Particle* Collection) {
     free(Force);
     return Accel;
 }
+
+//calculate derivative of accel (jerk)
+Vector* calc_jerk(Particle* Collection) {  //möglicher Fehler bei VZ von jerk_mag
+    Vector* Jerk = malloc(params.lineCount * sizeof(Vector));
+    if (Jerk == NULL) {
+        perror("Error allocating memory for Jerk!");
+        exit(EXIT_FAILURE);
+    }
+    int n = params.lineCount;
+
+#pragma omp parallel for
+    for (int i = 0; i < n; i++) {
+        Vector jerk_total;
+        jerk_total.x = 0;
+        jerk_total.y = 0;
+        jerk_total.z = 0;
+
+        Vector pos1;
+        pos1.x = Collection[i].x;
+        pos1.y = Collection[i].y;
+        pos1.z = Collection[i].z;
+
+        Vector vel1;
+        vel1.x = Collection[i].vx;
+        vel1.y = Collection[i].vy;
+        vel1.z = Collection[i].vz;
+
+        for (int j = 0; j < n; j++) {
+            // Preventing an object form calculating the jerk on itself
+            if (j == i) {
+                continue;
+            }
+
+            Vector pos2;
+            pos2.x = Collection[j].x;
+            pos2.y = Collection[j].y;
+            pos2.z = Collection[j].z;
+
+            Vector vel2;
+            vel2.x = Collection[j].vx;
+            vel2.y = Collection[j].vy;
+            vel2.z = Collection[j].vz;
+
+            // Setting jerk to 0 for two particles in the same location
+            Vector jerk;
+            if (vec_sepDist(pos1, pos2) < 1.0E-3) {
+                jerk.x = 0;
+                jerk.y = 0;
+                jerk.z = 0;
+            } else {
+                double inv_dist = 1 / vec_sepDist(pos1, pos2);
+                // G = M = 1
+
+                Vector rseparation = vec_sub(pos1, pos2);
+                Vector vseparation = vec_sub(vel1, vel2);
+                double jerk_magv = -(Collection[j].mass) *
+                                   pow(inv_dist, 3);
+                double jerk_magr = 3 * (Collection[j].mass) * vec_dot(vseparation, rseparation)*
+                                   pow(inv_dist, 5);
+                
+                jerk = vec_sub(vec_scalProd(jerk_magv, vseparation), vec_scalProd(jerk_magr, rseparation));
+            }
+
+            jerk_total = vec_add(jerk_total, jerk);
+        }
+        Jerk[i] = jerk_total;
+    }
+    return Jerk;
+}
