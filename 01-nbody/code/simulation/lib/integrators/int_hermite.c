@@ -3,7 +3,7 @@
 // Calculating the euler-cromer integrator to Collection2
 void calc_hermite(Particle* Collection1, Particle* Collection2) {
     Vector* Accel = calc_acc(Collection1);
-
+    Vector* Jerk = calc_jerk(Collection1);
     for (int i = 0; i < params.lineCount; i++) {
         Collection2[i].vx = Collection1[i].vx + Accel[i].x * params.timeStep;
         Collection2[i].vy = Collection1[i].vy + Accel[i].y * params.timeStep;
