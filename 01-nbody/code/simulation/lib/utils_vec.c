@@ -54,3 +54,12 @@ Vector vec_cross(Vector vec1, Vector vec2) {
     cross.z = vec1.x * vec2.y - vec1.y * vec2.x;
     return cross;
 }
+
+// Calculating the dot product of two vectors
+Vector vec_dot(Vector vec1, Vector vec2) {
+    Vector dot;
+    dot.x = vec1.x * vec2.x;
+    dot.y = vec1.y * vec2.y;
+    dot.z = vec1.z * vec2.z;
+    return dot;
+}

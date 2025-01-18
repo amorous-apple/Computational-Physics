@@ -8,5 +8,5 @@
 
 Vector* calc_force(Particle* Collection);
 Vector* calc_acc(Particle* Collection);
-
+Vector* calc_jerk(Particle* Collection);
 #endif
