@@ -1,10 +1,16 @@
 set term gif animate delay 2 size 400, 400
-set output "./animations/3body_eulercrom_0.01.gif"
+
+basename = "2body_euler_0.01"
+timeStep = 0.01
+
+set output "./animations/".basename.".gif"
 set datafile separator ","
 
-stats '3body_eulercrom_0.01.csv' us 2 name "x" nooutput
-stats '3body_eulercrom_0.01.csv' us 3 name "y" nooutput
-stats '3body_eulercrom_0.01.csv' us 4 name "z" nooutput
+filename = "./data_system/".basename.".csv"
+
+stats filename us 2 name "x" nooutput
+stats filename us 3 name "y" nooutput
+stats filename us 4 name "z" nooutput
 
 set xlabel "x"
 set ylabel "y"
@@ -14,5 +20,5 @@ set yrange [y_min-.1:y_max+.1]
 set zrange [z_min-.1:z_max+.1]
 
 do for [i=0:int(x_blocks-2)] {
-	splot '3body_eulercrom_0.01.csv' us 2:3:4 index i w p pt 7 title "t: ".(i)
+	splot filename us 2:3:4 index i w p pt 7 title sprintf("t: %.2f", i * timeStep)
 }
