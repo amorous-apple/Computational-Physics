@@ -140,7 +140,7 @@ Vector* calc_jerk(Particle* Collection) {  //möglicher Fehler bei VZ von jerk_m
                 Vector vseparation = vec_sub(vel1, vel2);
                 double jerk_magv = -(Collection[j].mass) *
                                    pow(inv_dist, 3);
-                double jerk_magr = 3 * (Collection[j].mass) * vec_dot(vseparation, rseparation)*
+                double jerk_magr = 3.0 * (Collection[j].mass) * vec_dot(vseparation, rseparation)*
                                    pow(inv_dist, 5);
                 
                 jerk = vec_sub(vec_scalProd(jerk_magv, vseparation), vec_scalProd(jerk_magr, rseparation));
