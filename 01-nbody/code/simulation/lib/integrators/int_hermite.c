@@ -1,34 +1,41 @@
 #include "int_hermite.h"
 
-// Calculating the euler-cromer integrator to Collection2
+// Calculating the hermite integrator to Collection2
 void calc_hermite(Particle* Collection1, Particle* Collection2) {
     Vector* Accel = calc_acc(Collection1);
     Vector* Jerk = calc_jerk(Collection1);
     Particle* Prediction = malloc(params.lineCount * sizeof(Particle));
-    for (int i = 0; i < params.lineCount;
-         i++) {  // replace Collection 2 with "Prediction"
-        Prediction[i].vx =
-            Collection1[i].vx + Accel[i].x * params.timeStep +
-            1.0 / 2 * Jerk[i].x * pow(params.timeStep, 2);  // predicted
+    if (Prediction == NULL) {
+        perror("Error allocating memory for Prediction!\n");
+        exit(EXIT_FAILURE);
+    }
+
+    for (int i = 0; i < params.lineCount; i++) {
+        // Calculating the predicted velocity
+        Prediction[i].vx = Collection1[i].vx + Accel[i].x * params.timeStep +
+                           1.0 / 2 * Jerk[i].x * pow(params.timeStep, 2);
         Prediction[i].vy = Collection1[i].vy + Accel[i].y * params.timeStep +
                            1.0 / 2 * Jerk[i].y * pow(params.timeStep, 2);
         Prediction[i].vz = Collection1[i].vz + Accel[i].z * params.timeStep +
                            1.0 / 2 * Jerk[i].z * pow(params.timeStep, 2);
 
-        Prediction[i].x =
-            Collection1[i].x + Collection1[i].vx * params.timeStep +
-            1.0 / 2 * Accel[i].x * pow(params.timeStep, 2) +
-            1.0 / 6 * Jerk[i].x * pow(params.timeStep, 3);  // predicted
-        Prediction[i].y =
-            Collection1[i].y + Collection1[i].vy * params.timeStep +
-            1.0 / 2 * Accel[i].y * pow(params.timeStep, 2) +
-            1.0 / 6 * Jerk[i].y * pow(params.timeStep, 3);  // predicted
-        Prediction[i].z =
-            Collection1[i].z + Collection1[i].vz * params.timeStep +
-            1.0 / 2 * Accel[i].z * pow(params.timeStep, 2) +
-            1.0 / 6 * Jerk[i].z * pow(params.timeStep, 3);  // predicted
+        // Calculating the predicted position
+        Prediction[i].x = Collection1[i].x +
+                          Collection1[i].vx * params.timeStep +
+                          1.0 / 2 * Accel[i].x * pow(params.timeStep, 2) +
+                          1.0 / 6 * Jerk[i].x * pow(params.timeStep, 3);
+        Prediction[i].y = Collection1[i].y +
+                          Collection1[i].vy * params.timeStep +
+                          1.0 / 2 * Accel[i].y * pow(params.timeStep, 2) +
+                          1.0 / 6 * Jerk[i].y * pow(params.timeStep, 3);
+        Prediction[i].z = Collection1[i].z +
+                          Collection1[i].vz * params.timeStep +
+                          1.0 / 2 * Accel[i].z * pow(params.timeStep, 2) +
+                          1.0 / 6 * Jerk[i].z * pow(params.timeStep, 3);
     }
-    // calculate new predicted accelp and jerkp
+    // Calculating new predicted acceleration and jerk
+    // TODO: Why are you suddenly using Collection2 even though you didn't
+    // modify any of the values??
     Vector* Accel_p = calc_acc(Collection2);  // predicted accel n+1
     Vector* Jerk_p = calc_jerk(Collection2);
 
@@ -36,9 +43,12 @@ void calc_hermite(Particle* Collection1, Particle* Collection2) {
     // Vector* Jerk_next = malloc(params.lineCount * sizeof(Vector));
     // calculate the
     for (int i = 0; i < params.lineCount; i++) {
-        // Accel_next[i].x = Accel[i].x + Jerk[i].x * params.timeStep - 3 *
-        // (Accel[i].x - Accel_p[i].x) - (2 * Jerk[i].x + Jerk_p[i].x) *
-        // params.timeStep +
+        // TODO: You're allowed to delete code - it will be in the git history
+        // anyway in case we need it later
+        //
+        // Accel_next[i].x = Accel[i].x +
+        // Jerk[i].x * params.timeStep - 3 * (Accel[i].x - Accel_p[i].x) - (2 *
+        // Jerk[i].x + Jerk_p[i].x) * params.timeStep +
         //     2 * (Accel[i].x - Accel_p[i].x) + (Jerk[i].x + Jerk_p[i].x) *
         //     params.timeStep;
         // Accel_next[i].y = Accel[i].y + Jerk[i].y * params.timeStep - 3 *
@@ -63,6 +73,7 @@ void calc_hermite(Particle* Collection1, Particle* Collection2) {
         // Jerk[i].z + Jerk_p[i].z) + 6 * (Accel[i].z - Accel_p[i].z) *
         // (1/params.timeStep) + 3 * (Jerk[i].z + Jerk_p[i].z);
 
+        // TODO: What is going on here? I can't find this formula in the manual.
         Collection2[i].vx =
             Prediction[i].vx - (Accel[i].x - Accel_p[i].x) * params.timeStep -
             (2 * Jerk[i].x + Jerk_p[i].x) / 3 * params.timeStep *
@@ -120,6 +131,9 @@ void calc_hermite(Particle* Collection1, Particle* Collection2) {
                                     params.timeStep * params.timeStep);
     }
 
+    // TODO: Allocating and freeing this amount of memory with data for every
+    // particle is a poor use of resources -> Allocate once and pass space as a
+    // function parameter
     free(Accel);
     free(Jerk);
     free(Accel_p);
