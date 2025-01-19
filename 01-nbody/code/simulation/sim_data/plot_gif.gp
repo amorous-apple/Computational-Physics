@@ -1,7 +1,7 @@
 set term gif animate delay 2 size 400, 400
 
-basename = "2body_euler_0.01"
-timeStep = 0.01
+basename = "3body_hermite_0.1"
+timeStep = 0.1
 
 set output "./animations/".basename.".gif"
 set datafile separator ","

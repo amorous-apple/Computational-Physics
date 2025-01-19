@@ -38,7 +38,7 @@ Vector* calc_force(Particle* Collection) {
                 force.y = 0;
                 force.z = 0;
             } else {
-                double inv_dist = 1 / vec_sepDist(pos1, pos2);
+                double inv_dist = 1.0 / vec_sepDist(pos1, pos2);
                 // G = M = 1
                 // F_G = - (m1 * m2) * (1/ r)^2
                 double force_mag = -(Collection[i].mass * Collection[j].mass) *
@@ -84,11 +84,12 @@ Vector* calc_acc(Particle* Collection) {
     return Accel;
 }
 
-//calculate derivative of accel (jerk)
-Vector* calc_jerk(Particle* Collection) {  //möglicher Fehler bei VZ von jerk_mag
+// calculate derivative of accel (jerk)
+Vector* calc_jerk(
+    Particle* Collection) {  // möglicher Fehler bei VZ von jerk_mag
     Vector* Jerk = malloc(params.lineCount * sizeof(Vector));
     if (Jerk == NULL) {
-        perror("Error allocating memory for Jerk!");
+        perror("Error allocating memory for Jerk!\n");
         exit(EXIT_FAILURE);
     }
     int n = params.lineCount;
@@ -111,7 +112,7 @@ Vector* calc_jerk(Particle* Collection) {  //möglicher Fehler bei VZ von jerk_m
         vel1.z = Collection[i].vz;
 
         for (int j = 0; j < n; j++) {
-            // Preventing an object form calculating the jerk on itself
+            // Preventing an object from calculating the jerk on itself
             if (j == i) {
                 continue;
             }
@@ -133,17 +134,18 @@ Vector* calc_jerk(Particle* Collection) {  //möglicher Fehler bei VZ von jerk_m
                 jerk.y = 0;
                 jerk.z = 0;
             } else {
-                double inv_dist = 1 / vec_sepDist(pos1, pos2);
+                double inv_dist = 1.0 / vec_sepDist(pos1, pos2);
                 // G = M = 1
 
-                Vector rseparation = vec_sub(pos1, pos2);
-                Vector vseparation = vec_sub(vel1, vel2);
-                double jerk_magv = -(Collection[j].mass) *
-                                   pow(inv_dist, 3);
-                double jerk_magr = 3.0 * (Collection[j].mass) * vec_dot(vseparation, rseparation)*
+                Vector rSeperation = vec_sub(pos1, pos2);
+                Vector vSeperation = vec_sub(vel1, vel2);
+                double jerk_magv = -(Collection[j].mass) * pow(inv_dist, 3);
+                double jerk_magr = 3.0 * (Collection[j].mass) *
+                                   vec_dot(vSeperation, rSeperation) *
                                    pow(inv_dist, 5);
-                
-                jerk = vec_sub(vec_scalProd(jerk_magv, vseparation), vec_scalProd(jerk_magr, rseparation));
+
+                jerk = vec_sub(vec_scalProd(jerk_magv, vSeperation),
+                               vec_scalProd(jerk_magr, rSeperation));
             }
 
             jerk_total = vec_add(jerk_total, jerk);
