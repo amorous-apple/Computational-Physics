@@ -27,28 +27,6 @@ int main() {
     int numH = 0;
     int numV = 0;
 
-    // int countTotal = numH + numV;
-
-    // rodsH[0].posX = 0;
-    // rodsH[0].posY = 3;
-    // rodsH[1].posX = 0;
-    // rodsH[1].posY = 4;
-    // rodsH[2].posX = 0;
-    // rodsH[2].posY = 2;
-    // rodsH[3].posX = 0;
-    // rodsH[3].posY = 3;
-    numH = 0;
-
-    // rodsV[0].posX = 0;
-    // rodsV[0].posY = 0;
-    // rodsV[1].posX = 1;
-    // rodsV[1].posY = 0;
-    // rodsV[2].posX = 2;
-    // rodsV[2].posY = 0;
-    // rodsV[3].posX = 3;
-    // rodsV[3].posY = 0;
-    numV = 0;
-
     int **occupancyField = init_occupancyField();
     // printField(occupancyField);
 
@@ -56,18 +34,10 @@ int main() {
     fillField(rodsH, numH, rodsV, numV, occupancyField);
     printField(occupancyField);
 
-    // int startingRods = numH + numV;
-    //
-    // for (int i = 0; i < startingRods - 1; i++) {
-    //     delRod(rodsH, &numH, rodsV, &numV, occupancyField);
-    //     printf("Rods: %d\n", numH + numV);
-    //     printField(occupancyField);
-    // }
-
     int numRods = numH + numV;
     Position posTemp;
     for (int i = 0; i < 10000; i++) {
-        if (fiftyFifty()) {
+        if (fiftyFifty() && randomBit(alphaIns(numRods))) {
             // Adding a stiff rod
             if (fiftyFifty()) {
                 // Adding a horizontal rod

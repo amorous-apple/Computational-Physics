@@ -7,6 +7,7 @@
 extern const int SYSTEM_SIZE;
 extern const int ROD_SIZE;
 extern const double ACTIVITY;
+extern const double ACTIVITY_INVERSE;
 
 extern const double BETA;
 extern const double MU;
