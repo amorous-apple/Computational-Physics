@@ -85,8 +85,7 @@ Vector* calc_acc(Particle* Collection) {
 }
 
 // calculate derivative of accel (jerk)
-Vector* calc_jerk(
-    Particle* Collection) {  // möglicher Fehler bei VZ von jerk_mag
+Vector* calc_jerk(Particle* Collection) {  // möglicher Fehler bei VZ von jerk_mag
     Vector* Jerk = malloc(params.lineCount * sizeof(Vector));
     if (Jerk == NULL) {
         perror("Error allocating memory for Jerk!\n");
