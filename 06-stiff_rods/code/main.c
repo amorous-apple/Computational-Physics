@@ -3,6 +3,7 @@
 
 #include "lib/functions.h"
 #include "lib/init.h"
+#include "lib/utils_data.h"
 #include "lib/utils_field.h"
 #include "stdlib.h"
 
@@ -33,9 +34,32 @@ int main() {
     fillField(rodsH, numH, rodsV, numV, occupancyField);
     printField(occupancyField);
 
+    unsigned long int **Data1 =
+        malloc(NUM_DATA_POINTS * sizeof(unsigned long int *));
+    unsigned long int *dataArr =
+        malloc(4 * NUM_DATA_POINTS * sizeof(unsigned long int));
+    if (Data1 == NULL || dataArr == NULL) {
+        perror("Error allocating memory Data1 and dataArr!\n");
+        exit(EXIT_FAILURE);
+    }
+    for (int i = 0; i < NUM_DATA_POINTS; i++) {
+        Data1[i] = dataArr + i * 4;
+    }
+
     int numRods = numH + numV;
     Position posTemp;
-    for (int i = 0; i < 100000; i++) {
+    for (unsigned long int i = 0; i < NUM_STEPS; i++) {
+        if (i % WRITE_INTERVAL == 0) {
+            numRods = numH + numV;
+            int index = i / WRITE_INTERVAL;
+            printf("i = %ld\n", i - 1);
+            // printField(occupancyField);
+            Data1[index][0] = i;
+            Data1[index][1] = numRods;
+            Data1[index][2] = numH;
+            Data1[index][3] = numV;
+        }
+
         if (fiftyFifty() && randomBit(alphaIns(numRods))) {
             // Adding a stiff rod
             if (fiftyFifty()) {
@@ -78,11 +102,18 @@ int main() {
                 continue;
             }
         }
-        if (i % 10 == 0) {
-            printf("i = %i\n", i);
-            printField(occupancyField);
-        }
+        // if (i % WRITE_INTERVAL == 0) {
+        //     numRods = numH + numV;
+        //     int index = i / WRITE_INTERVAL;
+        //     printf("i = %ld\n", i);
+        //     printField(occupancyField);
+        //     Data1[index][0] = i;
+        //     Data1[index][1] = numRods;
+        //     Data1[index][2] = numH;
+        //     Data1[index][3] = numV;
+        // }
     }
+    data_write("plot1", Data1);
 
     free(rodsH);
     free(rodsV);
