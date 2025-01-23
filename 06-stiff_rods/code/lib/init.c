@@ -2,7 +2,7 @@
 
 const int SYSTEM_SIZE = 64;
 const int ROD_SIZE = 8;
-const double ACTIVITY = 0.56;
+const double ACTIVITY = 1.1;
 const double ACTIVITY_INVERSE = 1.0 / ACTIVITY;
 
 const double BETA = 5.0;

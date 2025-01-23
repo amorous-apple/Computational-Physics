@@ -36,7 +36,7 @@ int main() {
 
     int numRods = numH + numV;
     Position posTemp;
-    for (int i = 0; i < 10000; i++) {
+    for (int i = 0; i < 100000; i++) {
         if (fiftyFifty() && randomBit(alphaIns(numRods))) {
             // Adding a stiff rod
             if (fiftyFifty()) {
@@ -75,7 +75,7 @@ int main() {
                 printf("Removing a rod\n");
                 delRod(rodsH, &numH, rodsV, &numV, occupancyField);
             } else {
-                printf("Failed to remove a rod\n");
+                // printf("Failed to remove a rod\n");
                 continue;
             }
         }
