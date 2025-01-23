@@ -18,7 +18,7 @@ double alphaDel(int numRods) {
 
 double alphaIns(int numRods) {
     double probability =
-        (2.0 * numRods * numRods / (SYSTEM_SIZE + 1.0) * ACTIVITY);
+        (2.0 * SYSTEM_SIZE * SYSTEM_SIZE / (numRods + 1.0) * ACTIVITY);
     return probability > 1 ? 1.0 : probability;
 }
 
