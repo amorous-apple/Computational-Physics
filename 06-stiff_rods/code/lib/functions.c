@@ -12,13 +12,13 @@ int randomBit(double p) {
 
 double alphaDel(int numRods) {
     double probability =
-        ((double)numRods / 2.0 * SYSTEM_SIZE * SYSTEM_SIZE * exp(-BETA * MU));
+        ((double)numRods / 2.0 * SYSTEM_SIZE * SYSTEM_SIZE * ACTIVITY_INVERSE);
     return probability > 1 ? 1.0 : probability;
 }
 
 double alphaIns(int numRods) {
     double probability =
-        (2.0 * numRods * numRods / (SYSTEM_SIZE + 1.0) * exp(BETA * MU));
+        (2.0 * numRods * numRods / (SYSTEM_SIZE + 1.0) * ACTIVITY);
     return probability > 1 ? 1.0 : probability;
 }
 
