@@ -140,7 +140,7 @@ int **delRod(Position *rodsH, int *numH, Position *rodsV, int *numV,
              int **field) {
     int numRods = *numH + *numV;
     int randID = (rand() % numRods);
-    printf("randID: %d\n", randID);
+    // printf("randID: %d\n", randID);
 
     if (randID <= *numH - 1) {
         for (int i = randID; i < *numH - 1; i++) {
