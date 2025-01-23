@@ -1,7 +1,7 @@
 set terminal pngcairo size 700,700 noenhanced
 set datafile separator ","
 
-basename = "100body_euler_0.1"
+basename = "2body_hermite_0.1"
 filename = "./".basename."_calc.csv"
 
 # plotting angular moment as a function of time

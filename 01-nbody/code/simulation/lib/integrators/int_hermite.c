@@ -4,31 +4,26 @@
 void calc_hermite(Particle* Collection1, Particle* Collection2) {
     Vector* Accel = calc_acc(Collection1);
     Vector* Jerk = calc_jerk(Collection1);
-    Particle* Prediction = malloc(params.lineCount * sizeof(Particle));
-    if (Prediction == NULL) {
-        perror("Error allocating memory for Prediction!\n");
-        exit(EXIT_FAILURE);
-    }
-
+    
     for (int i = 0; i < params.lineCount; i++) {
         // Calculating the predicted velocity
-        Prediction[i].vx = Collection1[i].vx + Accel[i].x * params.timeStep +
+        Collection2[i].vx = Collection1[i].vx + Accel[i].x * params.timeStep +
                            1.0 / 2 * Jerk[i].x * pow(params.timeStep, 2);
-        Prediction[i].vy = Collection1[i].vy + Accel[i].y * params.timeStep +
+        Collection2[i].vy = Collection1[i].vy + Accel[i].y * params.timeStep +
                            1.0 / 2 * Jerk[i].y * pow(params.timeStep, 2);
-        Prediction[i].vz = Collection1[i].vz + Accel[i].z * params.timeStep +
+        Collection2[i].vz = Collection1[i].vz + Accel[i].z * params.timeStep +
                            1.0 / 2 * Jerk[i].z * pow(params.timeStep, 2);
 
         // Calculating the predicted position
-        Prediction[i].x = Collection1[i].x +
+        Collection2[i].x = Collection1[i].x +
                           Collection1[i].vx * params.timeStep +
                           1.0 / 2 * Accel[i].x * pow(params.timeStep, 2) +
                           1.0 / 6 * Jerk[i].x * pow(params.timeStep, 3);
-        Prediction[i].y = Collection1[i].y +
+        Collection2[i].y = Collection1[i].y +
                           Collection1[i].vy * params.timeStep +
                           1.0 / 2 * Accel[i].y * pow(params.timeStep, 2) +
                           1.0 / 6 * Jerk[i].y * pow(params.timeStep, 3);
-        Prediction[i].z = Collection1[i].z +
+        Collection2[i].z = Collection1[i].z +
                           Collection1[i].vz * params.timeStep +
                           1.0 / 2 * Accel[i].z * pow(params.timeStep, 2) +
                           1.0 / 6 * Jerk[i].z * pow(params.timeStep, 3);
@@ -75,28 +70,28 @@ void calc_hermite(Particle* Collection1, Particle* Collection2) {
 
         // TODO: What is going on here? I can't find this formula in the manual.
         Collection2[i].vx =
-            Prediction[i].vx - (Accel[i].x - Accel_p[i].x) * params.timeStep -
+            Collection2[i].vx - (Accel[i].x - Accel_p[i].x) * params.timeStep -
             (2 * Jerk[i].x + Jerk_p[i].x) / 3 * params.timeStep *
                 params.timeStep +
             1.0 / 4 *
                 (2 * (Accel[i].x - Accel_p[i].x) * params.timeStep +
                  (Jerk[i].x + Jerk_p[i].x) * params.timeStep * params.timeStep);
         Collection2[i].vy =
-            Prediction[i].vy - (Accel[i].y - Accel_p[i].y) * params.timeStep -
+            Collection2[i].vy - (Accel[i].y - Accel_p[i].y) * params.timeStep -
             (2 * Jerk[i].y + Jerk_p[i].y) / 3 * params.timeStep *
                 params.timeStep +
             1.0 / 4 *
                 (2 * (Accel[i].y - Accel_p[i].y) * params.timeStep +
                  (Jerk[i].y + Jerk_p[i].y) * params.timeStep * params.timeStep);
         Collection2[i].vz =
-            Prediction[i].vz - (Accel[i].z - Accel_p[i].z) * params.timeStep -
+            Collection2[i].vz - (Accel[i].z - Accel_p[i].z) * params.timeStep -
             (2 * Jerk[i].z + Jerk_p[i].z) / 3 * params.timeStep *
                 params.timeStep +
             1.0 / 4 *
                 (2 * (Accel[i].z - Accel_p[i].z) * params.timeStep +
                  (Jerk[i].z + Jerk_p[i].z) * params.timeStep * params.timeStep);
 
-        Collection2[i].x = Prediction[i].x -
+        Collection2[i].x = Collection2[i].x -
                            (Accel[i].x - Accel_p[i].x) / 4 * params.timeStep *
                                params.timeStep -
                            (2 * Jerk[i].x + Jerk_p[i].x) / 12 *
@@ -107,7 +102,7 @@ void calc_hermite(Particle* Collection1, Particle* Collection2) {
                                     params.timeStep * params.timeStep +
                                 (Jerk[i].x + Jerk_p[i].x) * params.timeStep *
                                     params.timeStep * params.timeStep);
-        Collection2[i].y = Prediction[i].y -
+        Collection2[i].y = Collection2[i].y -
                            (Accel[i].y - Accel_p[i].y) / 4 * params.timeStep *
                                params.timeStep -
                            (2 * Jerk[i].y + Jerk_p[i].y) / 12 *
@@ -118,7 +113,7 @@ void calc_hermite(Particle* Collection1, Particle* Collection2) {
                                     params.timeStep * params.timeStep +
                                 (Jerk[i].y + Jerk_p[i].y) * params.timeStep *
                                     params.timeStep * params.timeStep);
-        Collection2[i].z = Prediction[i].z -
+        Collection2[i].z = Collection2[i].z -
                            (Accel[i].z - Accel_p[i].z) / 4 * params.timeStep *
                                params.timeStep -
                            (2 * Jerk[i].z + Jerk_p[i].z) / 12 *
@@ -138,5 +133,5 @@ void calc_hermite(Particle* Collection1, Particle* Collection2) {
     free(Jerk);
     free(Accel_p);
     free(Jerk_p);
-    free(Prediction);
+    //free(Prediction);
 }
