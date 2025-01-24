@@ -66,7 +66,7 @@ void calc_hermite(Particle* Collection1, Particle* Collection2) {
         // Jerk[i].z + Jerk_p[i].z) + 6 * (Accel[i].z - Accel_p[i].z) *
         // (1/params.timeStep) + 3 * (Jerk[i].z + Jerk_p[i].z);
 
-        // TODO: What is going on here? I can't find this formula in the manual.
+    
         Collection2[i].vx =
             Collection2[i].vx - (Accel[i].x - Accel_p[i].x) * params.timeStep -
             (2 * Jerk[i].x + Jerk_p[i].x) / 3 * params.timeStep *
