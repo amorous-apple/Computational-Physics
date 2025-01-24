@@ -29,8 +29,6 @@ void calc_hermite(Particle* Collection1, Particle* Collection2) {
                           1.0 / 6 * Jerk[i].z * pow(params.timeStep, 3);
     }
     // Calculating new predicted acceleration and jerk
-    // TODO: Why are you suddenly using Collection2 even though you didn't
-    // modify any of the values??
     Vector* Accel_p = calc_acc(Collection2);  // predicted accel n+1
     Vector* Jerk_p = calc_jerk(Collection2);
 
