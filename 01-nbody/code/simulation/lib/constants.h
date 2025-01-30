@@ -9,16 +9,16 @@
 extern const double TIMEMAX;
 
 typedef struct {
-	double x, y, z;
-	double vx, vy, vz;
-	double mass;
-} Particle;
-
-typedef struct {
 	double x;
 	double y;
 	double z;
 } Vector;
+
+typedef struct {
+    Vector pos;
+    Vector vel;
+	double mass;
+} Particle;
 
 typedef struct {
 	char* filename;

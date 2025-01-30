@@ -16,9 +16,7 @@ Vector* calc_force(Particle* Collection) {
         force_total.z = 0;
 
         Vector pos1;
-        pos1.x = Collection[i].x;
-        pos1.y = Collection[i].y;
-        pos1.z = Collection[i].z;
+        pos1 = Collection[i].pos;
 
         for (int j = 0; j < n; j++) {
             // Preventing an object form calculating the force on itself
@@ -27,9 +25,7 @@ Vector* calc_force(Particle* Collection) {
             }
 
             Vector pos2;
-            pos2.x = Collection[j].x;
-            pos2.y = Collection[j].y;
-            pos2.z = Collection[j].z;
+            pos2 = Collection[j].pos;
 
             // Setting force to 0 for two particles in the same location
             Vector force;
@@ -85,7 +81,8 @@ Vector* calc_acc(Particle* Collection) {
 }
 
 // calculate derivative of accel (jerk)
-Vector* calc_jerk(Particle* Collection) {  // möglicher Fehler bei VZ von jerk_mag
+Vector* calc_jerk(
+    Particle* Collection) {  // möglicher Fehler bei VZ von jerk_mag
     Vector* Jerk = malloc(params.lineCount * sizeof(Vector));
     if (Jerk == NULL) {
         perror("Error allocating memory for Jerk!\n");
@@ -101,14 +98,10 @@ Vector* calc_jerk(Particle* Collection) {  // möglicher Fehler bei VZ von jerk_
         jerk_total.z = 0;
 
         Vector pos1;
-        pos1.x = Collection[i].x;
-        pos1.y = Collection[i].y;
-        pos1.z = Collection[i].z;
+        pos1 = Collection[i].pos;
 
         Vector vel1;
-        vel1.x = Collection[i].vx;
-        vel1.y = Collection[i].vy;
-        vel1.z = Collection[i].vz;
+        vel1 = Collection[i].vel;
 
         for (int j = 0; j < n; j++) {
             // Preventing an object from calculating the jerk on itself
@@ -117,14 +110,10 @@ Vector* calc_jerk(Particle* Collection) {  // möglicher Fehler bei VZ von jerk_
             }
 
             Vector pos2;
-            pos2.x = Collection[j].x;
-            pos2.y = Collection[j].y;
-            pos2.z = Collection[j].z;
+            pos2 = Collection[j].pos;
 
             Vector vel2;
-            vel2.x = Collection[j].vx;
-            vel2.y = Collection[j].vy;
-            vel2.z = Collection[j].vz;
+            vel2 = Collection[j].vel;
 
             // Setting jerk to 0 for two particles in the same location
             Vector jerk;

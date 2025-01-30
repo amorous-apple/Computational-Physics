@@ -6,8 +6,7 @@ double calc_ener(Particle* Collection) {
     for (int i = 0; i < params.lineCount; i++) {
         // Calculating and adding the kinetic energy components for particle i
         total_ener += (1.0 / 2.0) * Collection[i].mass *
-                      (pow(Collection[i].vx, 2) + pow(Collection[i].vx, 2) +
-                       pow(Collection[i].vx, 2));
+                      pow(vec_mag(Collection[i].vel), 2);
 
 // Calculating and adding the gravitational potential
 // energy for every particle
@@ -20,20 +19,16 @@ double calc_ener(Particle* Collection) {
                 }
 
                 Vector pos1;
-                pos1.x = Collection[i].x;
-                pos1.y = Collection[i].y;
-                pos1.z = Collection[i].z;
+                pos1 = Collection[i].pos;
 
                 Vector pos2;
-                pos2.x = Collection[i].x;
-                pos2.y = Collection[i].y;
-                pos2.z = Collection[i].z;
+                pos2 = Collection[j].pos;
 
                 double separation = vec_sepDist(pos1, pos2);
                 if (separation < 1E-6) {
                     continue;
                 } else {
-                    double inv_separation = 1.0 / vec_sepDist(pos1, pos2);
+                    double inv_separation = 1.0 / separation;
                     total_ener += (Collection[i].mass * Collection[j].mass) *
                                   inv_separation;
                 }
