@@ -8,7 +8,7 @@ void choose_integrator(Particle* Collection1, Particle* Collection2) {
     } else if (strcmp(params.integrator, "mid") == 0) {
         calc_middle(Collection1, Collection2);
     } else if (strcmp(params.integrator, "velver") == 0) {
-        calc_velverl(Collection1, Collection2);
+        calc_velver(Collection1, Collection2);
     } else if (strcmp(params.integrator, "hermite") == 0) {
         calc_hermite(Collection1, Collection2);
     } else {

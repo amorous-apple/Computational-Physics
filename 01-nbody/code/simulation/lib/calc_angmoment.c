@@ -8,14 +8,10 @@ Vector calc_angmoment(Particle* Collection) {
 
     for (int i = 0; i < params.lineCount; i++) {
         Vector pos;
-        pos.x = Collection[i].x;
-        pos.y = Collection[i].y;
-        pos.z = Collection[i].z;
+        pos = Collection[i].pos;
 
         Vector vel;
-        vel.x = Collection[i].vx;
-        vel.y = Collection[i].vy;
-        vel.y = Collection[i].vz;
+        vel = Collection[i].vel;
 
         Vector angmoment = vec_cross(pos, vel);
         total_angmoment = vec_add(total_angmoment, angmoment);

@@ -40,15 +40,15 @@ int main(int argc, char* argv[]) {
         Collection2 = Collection1;
         Collection1 = temp;
 
-        // Calculating the angular moment of the system
-        Vector angmoment = calc_angmoment(Collection1);
-        double mag_angmoment = vec_mag(angmoment);
-
-        // Calculating the energy of the system
-        double energy = calc_ener(Collection1);
-
-        // Writing the calculated data for the time step to fileoutCalc
-        data_writeCalc(mag_angmoment, energy, fileoutCalc, timeCurrent);
+        // // Calculating the angular moment of the system
+        // Vector angmoment = calc_angmoment(Collection1);
+        // double mag_angmoment = vec_mag(angmoment);
+        //
+        // // Calculating the energy of the system
+        // double energy = calc_ener(Collection1);
+        //
+        // // Writing the calculated data for the time step to fileoutCalc
+        // data_writeCalc(mag_angmoment, energy, fileoutCalc, timeCurrent);
     }
 
     free(Collection1);

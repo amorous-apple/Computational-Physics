@@ -3,6 +3,7 @@
 
 #include "./../constants.h"
 #include "./../calc_accel.h"
+#include "./../utils_vec.h"
 
 void calc_hermite(Particle* Collection1, Particle* Collection2);
 
