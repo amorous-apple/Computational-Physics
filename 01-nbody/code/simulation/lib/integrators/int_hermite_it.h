@@ -1,5 +1,5 @@
-#ifndef INT_HERMITE_it_H
-#define INT_HERMITE_it_H
+#ifndef INT_HERMITE_IT_H
+#define INT_HERMITE_IT_H
 
 #include "./../constants.h"
 #include "./../calc_accel.h"
