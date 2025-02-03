@@ -1,0 +1,87 @@
+\documentclass[ngerman]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{babel}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amssymb}
+%\usepackage{xcolor}
+\usepackage{amsmath}
+\usepackage{physics}
+\newcommand{\equalhat}{\overset{\scriptscriptstyle\wedge}{=}}
+\usepackage{graphicx}
+\usepackage[a4paper,top=2cm,bottom=2cm,left=2cm,right=2cm,marginparwidth=1.75cm]{geometry}
+\usepackage[hidelinks]{hyperref}
+\usepackage{multirow}
+\usepackage{siunitx}
+\sisetup{locale = DE}
+\usepackage{multirow}
+\usepackage{float}
+\usepackage{fancyhdr}
+\usepackage{subcaption}
+\usepackage[version=4]{mhchem}
+
+\title{\textbf{The Classical N-Body-Problem }\\  
+Eberhard Karls Universität Tübingen- Physikalisches Institut\\ Computational Physics
+}
+%\begin{center}
+\author{ Noah Matera, Richard Abele \\ 
+Version 1
+\\  } 
+
+\date{\item{Session Date Tübingen, 21.10.24}\\ \item{Hand-in Tübingen, den} \\ Wintersemester 24/25}
+%\end{center}
+\begin{document}
+\thispagestyle{empty}
+\maketitle
+\newpage
+
+\pagestyle{fancy}                    % Eigener Seitenstil
+\fancyhf{}                           % Alle Kopf- und Fußzeilenfelder bereinigen
+\fancyhead[L]{Abele,Matera}                % Kopfzeile links
+\fancyhead[C]{Integrators}                        % Zentrierte Kopfzeile
+\fancyhead[R]{21.10.24}                 % Kopfzeile rechts
+\renewcommand{\headrulewidth}{0.4pt} % Obere Trennlinie
+\fancyfoot[C]{\thepage}              % Seitennummer
+\renewcommand{\footrulewidth}{0pt}
+\tableofcontents 
+\newpage
+
+\section{Background}
+The following exercises showcase several integrators to solve the n-body problem. 
+For simplicity, the total mass $M$ as well as the gravitational constant $G$ are set to 1 and the coordinates are shifted to a center of mass coordinate system, to counteract any drifting of the center of mass.
+We were provided with initial conditions, that is, mass, velocity, and location, for $n=2, 3, 100, 1000$ 3-dimensional particles.
+
+\section{Exercise 1: The Program}
+Our program is able to normalize the data, meaning transforming it into a center of mass coordinate system. Then those initial conditions can be used to simulate the time evolution using the following integrators: Euler, Euler-Cromer, Velocity-Verlet, 
+Heun, RK4, Hermite, and iterated Hermite.
+
+\textbf{explain code here and maybe put github link and explanation of how it works here}
+
+
+\subsection{Exercise 2: The 2-Body-Problem}  
+In order to analyze the effectiveness of our integrators on the 2-Body-Problem, we analyze the time evolution of the energy $E$, angular momentum $j$, Runge-Lenz vector $e$, and the major axis of the orbit $a_e$. These are all plotted logarithmically against our pseudo time for each integrator.
+
+%\begin{figure}[H]
+%    \centering
+%    \includegraphics[width=0.5\linewidth]{title.png}
+%    \caption{Plot}
+%    \label{Plot1}
+%\end{figure}
+
+\subsection{Exercise 3: The N-Body-Problem}  
+For $n=100, 1000$, just the energy is plotted logarithmically as
+\begin{align}
+    \log(\frac{E_{\text{initial}}-E}{E_{\text{initial}}}).
+\end{align}
+
+
+
+
+
+We also compared the runtime difference for $n=100$ and $n=1000$  for 2 exemplary integrators
+\section{Fazit}
+\section{Quellenverzeichnis} 
+\begin{enumerate}
+    \item  Versuchsanleitung des Physikalischen Institutes der Universität Tübingen:  Projekt 1: Das klassische N-Körper-Problem \label{Versuchsanleitung}
+\end{enumerate}
+\end{document}
