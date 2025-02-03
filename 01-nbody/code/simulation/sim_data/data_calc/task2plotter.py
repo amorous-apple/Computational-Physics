@@ -15,7 +15,7 @@ for b in bodies:
                 df = pd.DataFrame(data)
                 for h in headers[1:]:
                     df.plot(x='t', y=f'{h}', xlabel="time", ylabel=f"{h}", title=f"{b}_{i}_{t}_{h}", legend=False)
-                    plt.savefig(f"./code/simulation/sim_data/data_calc/plots/{b}_{i}_{t}_{h}.png")
+                    plt.savefig(f"./code/simulation/sim_data/data_calc/plots/{b}_{i}_{t}_{h}.png", dpi=300, bbox_inches="tight")
                     plt.close()
             except:
                 print('you might be in the wrong wd, try executing in 01-nbody.')
