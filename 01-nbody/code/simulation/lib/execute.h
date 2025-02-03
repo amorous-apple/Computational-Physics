@@ -10,6 +10,7 @@
 #include "integrators/int_middle.h"
 #include "integrators/int_velver.h"
 #include "integrators/int_hermite.h"
+#include "integrators/int_hermite_it.h"
 
 void choose_integrator(Particle* Collection1, Particle* Collection2);
 
