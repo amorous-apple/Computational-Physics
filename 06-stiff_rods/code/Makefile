@@ -1,6 +1,8 @@
 CC = gcc
 CFLAGS = -Wall -Wextra -fopenmp -g
 LDFLAGS = -lm -fopenmp
+# CFLAGS = -O3
+# LDFLAGS = -lm
 
 # Define the executable name and build directory
 EXEC = stiffy.out

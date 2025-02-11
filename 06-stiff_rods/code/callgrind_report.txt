@@ -1,0 +1,389 @@
+--------------------------------------------------------------------------------
+Profile data file 'callgrind.out.5609' (creator: callgrind-3.24.0)
+--------------------------------------------------------------------------------
+I1 cache: 
+D1 cache: 
+LL cache: 
+Timerange: Basic block 0 - 5540186033
+Trigger: Program termination
+Profiled target:  ./stiffy.out (PID 5609, part 1)
+Events recorded:  Ir
+Events shown:     Ir
+Event sort order: Ir
+Thresholds:       99
+Include dirs:     
+User annotated:   
+Auto-annotation:  on
+
+--------------------------------------------------------------------------------
+Ir                      
+--------------------------------------------------------------------------------
+44,872,210,469 (100.0%)  PROGRAM TOTALS
+
+--------------------------------------------------------------------------------
+Ir                       file:function
+--------------------------------------------------------------------------------
+14,686,988,236 (32.73%)  lib/utils_field.c:fillField [/home/likeabox/Documents/Uni/Jahr4-Semester7/computationalPhysics/projects/06-stiff_rods/code/stiffy.out]
+13,526,638,338 (30.14%)  lib/utils_field.c:testRod [/home/likeabox/Documents/Uni/Jahr4-Semester7/computationalPhysics/projects/06-stiff_rods/code/stiffy.out]
+13,050,199,130 (29.08%)  lib/utils_field.c:placeRod [/home/likeabox/Documents/Uni/Jahr4-Semester7/computationalPhysics/projects/06-stiff_rods/code/stiffy.out]
+   949,791,116 ( 2.12%)  /usr/src/debug/glibc/glibc/stdlib/random_r.c:random_r [/usr/lib/libc.so.6]
+   810,041,991 ( 1.81%)  /usr/src/debug/glibc/glibc/stdlib/random.c:random [/usr/lib/libc.so.6]
+   410,720,892 ( 0.92%)  lib/utils_field.c:delRod [/home/likeabox/Documents/Uni/Jahr4-Semester7/computationalPhysics/projects/06-stiff_rods/code/stiffy.out]
+   360,970,924 ( 0.80%)  main.c:main [/home/likeabox/Documents/Uni/Jahr4-Semester7/computationalPhysics/projects/06-stiff_rods/code/stiffy.out]
+   240,000,000 ( 0.53%)  lib/functions.c:randomBit [/home/likeabox/Documents/Uni/Jahr4-Semester7/computationalPhysics/projects/06-stiff_rods/code/stiffy.out]
+   211,315,302 ( 0.47%)  /usr/src/debug/glibc/glibc/stdlib/rand.c:rand [/usr/lib/libc.so.6]
+   209,990,680 ( 0.47%)  lib/functions.c:fiftyFifty [/home/likeabox/Documents/Uni/Jahr4-Semester7/computationalPhysics/projects/06-stiff_rods/code/stiffy.out]
+
+--------------------------------------------------------------------------------
+-- Auto-annotated source: lib/functions.c
+--------------------------------------------------------------------------------
+Ir                   
+
+          .           #include "functions.h"
+          .           
+209,990,680 ( 0.47%)  int fiftyFifty(void) { return rand() % 2; }
+854,479,333 ( 1.90%)  => /usr/src/debug/glibc/glibc/stdlib/rand.c:rand (14,999,334x)
+        777 ( 0.00%)  => /usr/src/debug/glibc/glibc/elf/../sysdeps/x86_64/dl-trampoline.h:_dl_runtime_resolve_xsave (1x)
+          .           
+ 40,000,000 ( 0.09%)  int randomBit(double p) {
+ 70,000,000 ( 0.16%)      if (p < 0.0 || p > 1.0) {
+          .                   perror("Probability must be between 0 and 1.\n");
+          .                   exit(EXIT_FAILURE);
+          .               }
+110,000,000 ( 0.25%)      return ((double)rand() / RAND_MAX) < p ? 1 : 0;
+569,674,704 ( 1.27%)  => /usr/src/debug/glibc/glibc/stdlib/rand.c:rand (10,000,000x)
+ 20,000,000 ( 0.04%)  }
+          .           
+ 15,001,998 ( 0.03%)  double alphaDel(int numRods) {
+ 75,009,990 ( 0.17%)      double probability = ((double)numRods / (2.0 * SYSTEM_SIZE * SYSTEM_SIZE) *
+          .                                     ACTIVITY_INVERSE);
+ 25,003,330 ( 0.06%)      return probability > 1 ? 1.0 : probability;
+ 10,001,332 ( 0.02%)  }
+          .           
+ 14,998,002 ( 0.03%)  double alphaIns(int numRods) {
+  9,998,668 ( 0.02%)      double probability =
+ 79,989,344 ( 0.18%)          (2.0 * SYSTEM_SIZE * SYSTEM_SIZE / (numRods + 1.0) * ACTIVITY);
+ 29,996,004 ( 0.07%)      return probability > 1 ? 1.0 : probability;
+  9,998,668 ( 0.02%)  }
+          .           
+109,985,348 ( 0.25%)  int randomCoord() { return rand() % SYSTEM_SIZE; }
+569,603,207 ( 1.27%)  => /usr/src/debug/glibc/glibc/stdlib/rand.c:rand (9,998,668x)
+
+--------------------------------------------------------------------------------
+-- Auto-annotated source: main.c
+--------------------------------------------------------------------------------
+Ir                  
+
+-- line 2 ----------------------------------------
+         .           #include <time.h>
+         .           
+         .           #include "lib/functions.h"
+         .           #include "lib/init.h"
+         .           #include "lib/utils_data.h"
+         .           #include "lib/utils_field.h"
+         .           #include "stdlib.h"
+         .           
+         6 ( 0.00%)  int main() {
+         .               // init();
+         .           
+        14 ( 0.00%)      srand(time(NULL));  // sets random seed
+    10,574 ( 0.00%)  => /usr/src/debug/glibc/glibc/stdlib/random.c:srand (1x)
+     1,630 ( 0.00%)  => /usr/src/debug/glibc/glibc/elf/../sysdeps/x86_64/dl-trampoline.h:_dl_runtime_resolve_xsave (2x)
+         6 ( 0.00%)  => /usr/src/debug/glibc/glibc/time/../sysdeps/unix/sysv/linux/time.c:time_syscall (1x)
+         .           
+         8 ( 0.00%)      int MAX_RODS = (SYSTEM_SIZE * SYSTEM_SIZE / ROD_SIZE) + 1;
+         .           
+        11 ( 0.00%)      Position *rodsH = malloc(MAX_RODS * sizeof(Position));
+       814 ( 0.00%)  => /usr/src/debug/glibc/glibc/elf/../sysdeps/x86_64/dl-trampoline.h:_dl_runtime_resolve_xsave (1x)
+       170 ( 0.00%)  => /usr/src/debug/glibc/glibc/malloc/malloc.c:malloc (1x)
+         2 ( 0.00%)      if (rodsH == NULL) {
+         .                   perror("Error allocating memory for rodsH\n");
+         .                   exit(EXIT_FAILURE);
+         .               }
+         7 ( 0.00%)      Position *rodsV = malloc(MAX_RODS * sizeof(Position));
+       170 ( 0.00%)  => /usr/src/debug/glibc/glibc/malloc/malloc.c:malloc (1x)
+         2 ( 0.00%)      if (rodsV == NULL) {
+         .                   perror("Error allocating memory for rodsV\n");
+         .                   exit(EXIT_FAILURE);
+         .               }
+         .           
+         1 ( 0.00%)      int numH = 0;
+         1 ( 0.00%)      int numV = 0;
+         .           
+         3 ( 0.00%)      int **occupancyField = init_occupancyField();
+     1,411 ( 0.00%)  => /home/likeabox/Documents/Uni/Jahr4-Semester7/computationalPhysics/projects/06-stiff_rods/code/lib/init.c:init_occupancyField (1x)
+         .               // printField(occupancyField);
+         .           
+         8 ( 0.00%)      fillField(rodsH, numH, rodsV, numV, occupancyField);
+    62,043 ( 0.00%)  => /home/likeabox/Documents/Uni/Jahr4-Semester7/computationalPhysics/projects/06-stiff_rods/code/lib/utils_field.c:fillField (1x)
+         .               // printField(occupancyField);
+         .           
+         .               unsigned long int **Data1 =
+         7 ( 0.00%)          malloc(NUM_DATA_POINTS * sizeof(unsigned long int *));
+       192 ( 0.00%)  => /usr/src/debug/glibc/glibc/malloc/malloc.c:malloc (1x)
+         .               unsigned long int *dataArr =
+         8 ( 0.00%)          malloc(4 * NUM_DATA_POINTS * sizeof(unsigned long int));
+       189 ( 0.00%)  => /usr/src/debug/glibc/glibc/malloc/malloc.c:malloc (1x)
+         4 ( 0.00%)      if (Data1 == NULL || dataArr == NULL) {
+         .                   perror("Error allocating memory Data1 and dataArr!\n");
+         .                   exit(EXIT_FAILURE);
+         .               }
+        49 ( 0.00%)      for (int i = 0; i < NUM_DATA_POINTS; i++) {
+       132 ( 0.00%)          Data1[i] = dataArr + i * 4;
+         .               }
+         .           
+         4 ( 0.00%)      int numRods = numH + numV;
+         .               Position posTemp;
+40,000,005 ( 0.09%)      for (unsigned long int i = 0; i < NUM_STEPS; i++) {
+90,000,000 ( 0.20%)          if (i % WRITE_INTERVAL == 0) {
+        40 ( 0.00%)              numRods = numH + numV;
+        60 ( 0.00%)              int index = i / WRITE_INTERVAL;
+        84 ( 0.00%)              printf("i = %ld\n", i - 1);
+    10,681 ( 0.00%)  => /usr/src/debug/glibc/glibc/stdio-common/printf.c:printf (10x)
+       782 ( 0.00%)  => /usr/src/debug/glibc/glibc/elf/../sysdeps/x86_64/dl-trampoline.h:_dl_runtime_resolve_xsave (1x)
+         .                       // printField(occupancyField);
+        80 ( 0.00%)              Data1[index][0] = i;
+       100 ( 0.00%)              Data1[index][1] = numRods;
+       100 ( 0.00%)              Data1[index][2] = numH;
+       100 ( 0.00%)              Data1[index][3] = numV;
+         .                   }
+         .           
+69,994,672 ( 0.16%)          if (fiftyFifty() && randomBit(alphaIns(numRods))) {
+709,681,768 ( 1.58%)  => /home/likeabox/Documents/Uni/Jahr4-Semester7/computationalPhysics/projects/06-stiff_rods/code/lib/functions.c:fiftyFifty (10,000,000x)
+404,782,984 ( 0.90%)  => /home/likeabox/Documents/Uni/Jahr4-Semester7/computationalPhysics/projects/06-stiff_rods/code/lib/functions.c:randomBit (4,999,334x)
+144,980,686 ( 0.32%)  => /home/likeabox/Documents/Uni/Jahr4-Semester7/computationalPhysics/projects/06-stiff_rods/code/lib/functions.c:alphaIns (4,999,334x)
+         .                       // Adding a stiff rod
+15,219,528 ( 0.03%)              if (fiftyFifty()) {
+354,789,022 ( 0.79%)  => /home/likeabox/Documents/Uni/Jahr4-Semester7/computationalPhysics/projects/06-stiff_rods/code/lib/functions.c:fiftyFifty (4,999,334x)
+         .                           // Adding a horizontal rod
+ 7,495,161 ( 0.02%)                  posTemp.posX = randomCoord();
+169,809,342 ( 0.38%)  => /home/likeabox/Documents/Uni/Jahr4-Semester7/computationalPhysics/projects/06-stiff_rods/code/lib/functions.c:randomCoord (2,498,387x)
+ 7,495,161 ( 0.02%)                  posTemp.posY = randomCoord();
+169,809,322 ( 0.38%)  => /home/likeabox/Documents/Uni/Jahr4-Semester7/computationalPhysics/projects/06-stiff_rods/code/lib/functions.c:randomCoord (2,498,387x)
+         .                           // printf("Trying to add hRod at (%d, %d)\n", posTemp.posX,
+         .                           //        posTemp.posY);
+17,488,709 ( 0.04%)                  if (testRod(posTemp, 'h', occupancyField)) {
+173,457,837 ( 0.39%)  => /home/likeabox/Documents/Uni/Jahr4-Semester7/computationalPhysics/projects/06-stiff_rods/code/lib/utils_field.c:testRod (2,498,387x)
+ 1,087,170 ( 0.00%)                      rodsH[numH] = posTemp;
+ 1,553,100 ( 0.00%)                      placeRod(rodsH[numH], 'h', occupancyField);
+60,328,812 ( 0.13%)  => /home/likeabox/Documents/Uni/Jahr4-Semester7/computationalPhysics/projects/06-stiff_rods/code/lib/utils_field.c:placeRod (155,310x)
+   465,930 ( 0.00%)                      numH++;
+         .                           } else {
+         .                               // printf("Failed to add a rod\n");
+ 4,686,154 ( 0.01%)                      continue;
+         .                           }
+         .                       } else {
+         .                           // Adding a vertical rod
+ 7,502,841 ( 0.02%)                  posTemp.posX = randomCoord();
+169,984,614 ( 0.38%)  => /home/likeabox/Documents/Uni/Jahr4-Semester7/computationalPhysics/projects/06-stiff_rods/code/lib/functions.c:randomCoord (2,500,947x)
+ 7,502,841 ( 0.02%)                  posTemp.posY = randomCoord();
+169,985,277 ( 0.38%)  => /home/likeabox/Documents/Uni/Jahr4-Semester7/computationalPhysics/projects/06-stiff_rods/code/lib/functions.c:randomCoord (2,500,947x)
+         .                           // printf("Trying to add vRod at (%d, %d)\n", posTemp.posX,
+         .                           //        posTemp.posY);
+17,506,629 ( 0.04%)                  if (testRod(posTemp, 'v', occupancyField)) {
+153,649,344 ( 0.34%)  => /home/likeabox/Documents/Uni/Jahr4-Semester7/computationalPhysics/projects/06-stiff_rods/code/lib/utils_field.c:testRod (2,500,947x)
+   463,512 ( 0.00%)                      rodsV[numV] = posTemp;
+   662,160 ( 0.00%)                      placeRod(rodsV[numV], 'v', occupancyField);
+24,009,256 ( 0.05%)  => /home/likeabox/Documents/Uni/Jahr4-Semester7/computationalPhysics/projects/06-stiff_rods/code/lib/utils_field.c:placeRod (66,216x)
+   198,648 ( 0.00%)                      numV++;
+         .                           } else {
+         .                               // printf("Failed to add a rod\n");
+ 4,869,462 ( 0.01%)                      continue;
+         .                           }
+         .                       }
+         .                   } else {
+         .                       // Removing a stiff rod
+20,002,664 ( 0.04%)              numRods = numH + numV;
+40,005,328 ( 0.09%)              if (randomBit(alphaDel(numRods))) {
+404,891,720 ( 0.90%)  => /home/likeabox/Documents/Uni/Jahr4-Semester7/computationalPhysics/projects/06-stiff_rods/code/lib/functions.c:randomBit (5,000,666x)
+125,016,650 ( 0.28%)  => /home/likeabox/Documents/Uni/Jahr4-Semester7/computationalPhysics/projects/06-stiff_rods/code/lib/functions.c:alphaDel (5,000,666x)
+         .                           // printf("Removing a rod\n");
+ 1,990,935 ( 0.00%)                  delRod(rodsH, &numH, rodsV, &numV, occupancyField);
+41,275,641,326 (91.98%)  => /home/likeabox/Documents/Uni/Jahr4-Semester7/computationalPhysics/projects/06-stiff_rods/code/lib/utils_field.c:delRod (221,215x)
+         .                       } else {
+         .                           // printf("Failed to remove a rod\n");
+ 4,779,451 ( 0.01%)                  continue;
+         .                       }
+         .                   }
+         .                   // if (i % WRITE_INTERVAL == 0) {
+         .                   //     numRods = numH + numV;
+         .                   //     int index = i / WRITE_INTERVAL;
+         .                   //     printf("i = %ld\n", i);
+         .                   //     printField(occupancyField);
+         .                   //     Data1[index][0] = i;
+         .                   //     Data1[index][1] = numRods;
+         .                   //     Data1[index][2] = numH;
+         .                   //     Data1[index][3] = numV;
+         .                   // }
+         .               }
+         5 ( 0.00%)      data_write("plot1", Data1);
+    23,281 ( 0.00%)  => /home/likeabox/Documents/Uni/Jahr4-Semester7/computationalPhysics/projects/06-stiff_rods/code/lib/utils_data.c:data_write (1x)
+         .           
+         8 ( 0.00%)      free(rodsH);
+       770 ( 0.00%)  => /usr/src/debug/glibc/glibc/elf/../sysdeps/x86_64/dl-trampoline.h:_dl_runtime_resolve_xsave (1x)
+       172 ( 0.00%)  => /usr/src/debug/glibc/glibc/malloc/malloc.c:free (1x)
+         4 ( 0.00%)      free(rodsV);
+       205 ( 0.00%)  => /usr/src/debug/glibc/glibc/malloc/malloc.c:free (1x)
+         5 ( 0.00%)      free(occupancyField[0]);
+       172 ( 0.00%)  => /usr/src/debug/glibc/glibc/malloc/malloc.c:free (1x)
+         5 ( 0.00%)      free(occupancyField);
+        66 ( 0.00%)  => /usr/src/debug/glibc/glibc/malloc/malloc.c:free (1x)
+         5 ( 0.00%)  }
+
+--------------------------------------------------------------------------------
+-- Auto-annotated source: lib/utils_field.c
+--------------------------------------------------------------------------------
+Ir                     
+
+-- line 29 ----------------------------------------
+            .                       }
+            .                   }
+            .                   printf("\n");
+            .               }
+            .           }
+            .           
+            .           // Testing if a rod can be inserted into a dataset without overlap (1 if
+            .           // insertable, 0 otherwise)
+  517,587,994 ( 1.15%)  int testRod(Position rodPosition, char rodType, int **field) {
+  147,882,284 ( 0.33%)      if (rodType == 'h') {
+  254,896,855 ( 0.57%)          int mVal = SYSTEM_SIZE - 1 - rodPosition.posY;
+  101,958,742 ( 0.23%)          int nVal = rodPosition.posX;
+1,820,268,359 ( 4.06%)          for (int i = 0; i < ROD_SIZE; i++) {
+            .                       // Periodic boundary conditions
+1,181,057,859 ( 2.63%)              if (nVal > SYSTEM_SIZE - 1) {
+   10,800,708 ( 0.02%)                  nVal -= SYSTEM_SIZE;
+            .                       }
+5,117,917,389 (11.41%)              if (field[mVal][nVal] != 0) {
+    4,686,154 ( 0.01%)                  return 0;
+            .                       }
+  391,342,876 ( 0.87%)              nVal++;
+            .                   }
+   97,272,588 ( 0.22%)          return 1;
+   45,923,542 ( 0.10%)      } else if (rodType == 'v') {
+   45,923,542 ( 0.10%)          int nVal = rodPosition.posX;
+  114,808,855 ( 0.26%)          int mVal = SYSTEM_SIZE - 1 - rodPosition.posY;
+  779,412,059 ( 1.74%)          for (int i = 0; i < ROD_SIZE; i++) {
+            .                       // Periodic boundary conditions
+  337,182,746 ( 0.75%)              if (mVal < 0) {
+    6,071,310 ( 0.01%)                  mVal += SYSTEM_SIZE;
+            .                       }
+2,191,687,849 ( 4.88%)              if (field[mVal][nVal] != 0) {
+    4,881,144 ( 0.01%)                  return 0;
+            .                       }
+  166,150,801 ( 0.37%)              mVal--;
+            .                   }
+   41,042,398 ( 0.09%)          return 1;
+            .               } else {
+            .                   printf("Invalid rodType of %c\n!", rodType);
+            .                   exit(EXIT_FAILURE);
+            .               }
+  147,882,284 ( 0.33%)  }
+            .           
+            .           // Placing a single rod into a field (returns 1 if placed and 0 otherwise)
+  482,592,656 ( 1.08%)  int placeRod(Position rodPosition, char rodType, int **field) {
+  551,534,464 ( 1.23%)      if (!testRod(rodPosition, rodType, field)) {
+13,199,531,157 (29.42%)  => lib/utils_field.c:testRod (68,941,808x)
+            .                   // printf("Invalid %c rod placement at (%d,%d)\n", rodType,
+            .                   //        rodPosition.posX, rodPosition.posY);
+       11,682 ( 0.00%)          return 0;
+            .               }
+  137,871,934 ( 0.31%)      if (rodType == 'h') {
+   96,961,968 ( 0.22%)          int nVal = rodPosition.posX;
+  242,404,920 ( 0.54%)          int mVal = SYSTEM_SIZE - 1 - rodPosition.posY;
+  533,290,824 ( 1.19%)          field[mVal][nVal] = 1;
+   48,480,984 ( 0.11%)          nVal++;
+1,745,315,424 ( 3.89%)          for (int j = 1; j < ROD_SIZE - 1; j++) {
+3,199,744,944 ( 7.13%)              field[mVal][nVal] = 2;
+  290,885,904 ( 0.65%)              nVal++;
+  872,657,712 ( 1.94%)              if (nVal > SYSTEM_SIZE - 1) {
+   10,686,862 ( 0.02%)                  nVal -= SYSTEM_SIZE;
+            .                       }
+            .                       // Periodic boundary conditions
+  872,657,712 ( 1.94%)              if (nVal > SYSTEM_SIZE - 1) {
+            .                           nVal -= SYSTEM_SIZE;
+            .                       }
+            .                   }
+  533,290,824 ( 1.19%)          field[mVal][nVal] = 3;
+   96,961,968 ( 0.22%)          return 1;
+   40,909,966 ( 0.09%)      } else if (rodType == 'v') {
+   40,909,966 ( 0.09%)          int nVal = rodPosition.posX;
+  102,274,915 ( 0.23%)          int mVal = SYSTEM_SIZE - 1 - rodPosition.posY;
+  225,004,813 ( 0.50%)          field[mVal][nVal] = -1;
+   20,454,983 ( 0.05%)          mVal--;
+   40,909,966 ( 0.09%)          if (mVal < 0) {
+      741,798 ( 0.00%)              mVal += SYSTEM_SIZE;
+            .                   }
+  736,379,388 ( 1.64%)          for (int j = 1; j < ROD_SIZE - 1; j++) {
+1,350,028,878 ( 3.01%)              field[mVal][nVal] = -2;
+  122,729,898 ( 0.27%)              mVal--;
+            .                       // Periodic boundary conditions
+  245,459,796 ( 0.55%)              if (mVal < 0) {
+    5,245,586 ( 0.01%)                  mVal += SYSTEM_SIZE;
+            .                       }
+            .                   }
+  225,004,813 ( 0.50%)          field[mVal][nVal] = -3;
+   40,909,966 ( 0.09%)          return 1;
+            .               } else {
+            .                   printf("Invalid rodType of %c\n!", rodType);
+            .                   exit(EXIT_FAILURE);
+            .               }
+  137,883,616 ( 0.31%)  }
+            .           
+            .           // Empties a field and then places all of the rods
+            .           void fillField(Position *rodsH, int numH, Position *rodsV, int numV,
+    1,769,728 ( 0.00%)                 int **field) {
+   57,737,376 ( 0.13%)      for (int i = 0; i < SYSTEM_SIZE; i++) {
+3,695,192,064 ( 8.23%)          for (int j = 0; j < SYSTEM_SIZE; j++) {
+9,967,108,096 (22.21%)              field[i][j] = 0;
+            .                   }
+            .               }
+            .           
+  194,408,776 ( 0.43%)      for (int i = 0; i < numH; i++) {
+  483,256,740 ( 1.08%)          placeRod(rodsH[i], 'h', field);
+18,771,666,704 (41.83%)  => lib/utils_field.c:placeRod (48,325,674x)
+            .               }
+   82,684,512 ( 0.18%)      for (int i = 0; i < numV; i++) {
+  203,946,080 ( 0.45%)          placeRod(rodsV[i], 'v', field);
+7,393,725,515 (16.48%)  => lib/utils_field.c:placeRod (20,394,608x)
+            .               }
+      884,864 ( 0.00%)  }
+            .           
+            .           // Deleting a random rod from the field
+            .           int **delRod(Position *rodsH, int *numH, Position *rodsV, int *numV,
+    1,769,720 ( 0.00%)               int **field) {
+    1,327,290 ( 0.00%)      int numRods = *numH + *numV;
+    1,106,075 ( 0.00%)      int randID = (rand() % numRods);
+   12,602,022 ( 0.03%)  => /usr/src/debug/glibc/glibc/stdlib/rand.c:rand (221,215x)
+            .               // printf("randID: %d\n", randID);
+            .           
+      884,860 ( 0.00%)      if (randID <= *numH - 1) {
+  106,118,316 ( 0.24%)          for (int i = randID; i < *numH - 1; i++) {
+  227,236,074 ( 0.51%)              rodsH[i] = rodsH[i + 1];
+            .                   }
+      930,096 ( 0.00%)          (*numH)--;
+            .               } else {
+      198,597 ( 0.00%)          randID -= *numH;
+   21,818,060 ( 0.05%)          for (int i = randID; i < *numV - 1; i++) {
+   46,125,014 ( 0.10%)              rodsV[i] = rodsV[i + 1];
+            .                   }
+      330,995 ( 0.00%)          (*numV)--;
+            .               }
+            .           
+    2,212,150 ( 0.00%)      fillField(rodsH, *numH, rodsV, *numV, field);
+40,852,318,412 (91.04%)  => lib/utils_field.c:fillField (221,215x)
+            .           
+      221,215 ( 0.00%)      return field;
+      442,430 ( 0.00%)  }
+
+--------------------------------------------------------------------------------
+The following files chosen for auto-annotation could not be found:
+--------------------------------------------------------------------------------
+  /usr/src/debug/glibc/glibc/stdlib/rand.c
+  /usr/src/debug/glibc/glibc/stdlib/random.c
+  /usr/src/debug/glibc/glibc/stdlib/random_r.c
+
+--------------------------------------------------------------------------------
+Ir                      
+--------------------------------------------------------------------------------
+42,865,490,884 (95.53%)  events annotated
+
