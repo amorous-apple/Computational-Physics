@@ -32,7 +32,7 @@ int main() {
     // printField(occupancyField);
 
     fillField(rodsH, numH, rodsV, numV, occupancyField);
-    printField(occupancyField);
+    // printField(occupancyField);
 
     unsigned long int **Data1 =
         malloc(NUM_DATA_POINTS * sizeof(unsigned long int *));

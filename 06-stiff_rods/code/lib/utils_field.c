@@ -72,8 +72,8 @@ int testRod(Position rodPosition, char rodType, int **field) {
 // Placing a single rod into a field (returns 1 if placed and 0 otherwise)
 int placeRod(Position rodPosition, char rodType, int **field) {
     if (!testRod(rodPosition, rodType, field)) {
-        printf("Invalid %c rod placement at (%d,%d)\n", rodType,
-               rodPosition.posX, rodPosition.posY);
+        // printf("Invalid %c rod placement at (%d,%d)\n", rodType,
+        //        rodPosition.posX, rodPosition.posY);
         return 0;
     }
     if (rodType == 'h') {
