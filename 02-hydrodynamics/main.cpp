@@ -4,46 +4,44 @@
 #include <fstream>
 #include <stdlib.h> 
 #include <thread>
+#include <cstring>
 #include <chrono>
 #include <string>
-#include <cstring>
+#include <filesystem>
+
 using std::string;
 
-
-
 // turns doubles into strings of manageable size used in output names 
-std::string to_string(double &variable)
-{
-   std::ostringstream Str;
-   Str.precision(1);
-   Str <<std::fixed<< variable;
-   return(Str.str());
+static std::string format_double(double var, int precision = 1) {
+    std::ostringstream S;
+    S.precision(precision);
+    S << std::fixed << var;
+    return S.str();
 }
 
-void write_to_file(vector<double> vec, string filename){
-    std::ofstream file(filename);
-    for(vector<double>::size_type i = 0; i < vec.size(); i++){
-        if(i == vec.size()-1){
-            file << vec[i];
-            break;
-
-        }
-        else{
-        file << vec[i] << ";";
-        }
+void to_file(const std::vector<double>& vec, const std::string& name){
+    std::ofstream file(name);
+    if(!file){
+        std::cerr << "Error: cannot open file '" << name << "' for writing\n";
+        return;
     }
-    file.close();
+    for(std::size_t i = 0; i < vec.size(); ++i){
+        file << vec[i];
+        if(i + 1 < vec.size()) file << ';';
+    }
+    file << '\n';
 }
 int main(){
 std::cout<<"Project: numerical hydrodynamics\nWhich exercise would you like to solve? 1 or 2?"<<std::endl;
 int input = 0;
 std::cin>>input;
 if(input == 1){
+
 // parameters to be adjusted
 double a = 1.0;
 double N = 400.0;        // 40.0
-double sigma = 1.1;     // 0.9; 1.0; 1.1
-double t_max = 400.0;     // 400.0
+double sigma = 0.8;     // 0.9; 1.0; 1.1
+double t_max = 400.0;     // 4.0
 double x_min = -1.0;
 double x_max = 1.0;
 
@@ -56,7 +54,7 @@ vector<double> u(N+4,0.0);
 // cell boundaries
 vector<double> x_a(N+4,0.0);
 for(int i = 0; i <= N; i++){
-   x_a[i+2] = x_min + (i)*dx;
+   x_a[i+2] = x_min + i*dx;
 }
 // cell centers
 vector<double> x_b(N+4,0.0);
@@ -77,17 +75,18 @@ for(int i = 2; i <= N+2 ; i++){
 for(int j = 2; j <= N+2; j++){
     u[j] = a;
 }
-// keeps track of time
+
+// keeps track of runtime
 auto start = std::chrono::high_resolution_clock::now();
 vector<double> psi_out(N+4,0.0);
 psi_out = library::advection(psi, N, dt, dx, u, t_max);
-
 auto end = std::chrono::high_resolution_clock::now();
+
 std::chrono::duration<double, std::milli> runtime = end - start;
 std::cout << "runtime: " << runtime.count() << " ms\n";
-write_to_file(psi_out, "output1/psi_N"+to_string(N)+"_sigma"+to_string(sigma) +".txt");
-write_to_file(x_b, "output1/xb_N"+ to_string(N) +"_sigma"+ to_string(sigma) +".txt");
-write_to_file(x_b, "output1/xa_N"+ to_string(N) +"_sigma"+ to_string(sigma) +".txt");
+to_file(psi_out, "output1/psi_N"+format_double(N)+"_sigma"+format_double(sigma) +".txt");
+to_file(x_b, "output1/xb_N"+ format_double(N) +"_sigma"+ format_double(sigma) +".txt");
+to_file(x_a, "output1/xa_N"+ format_double(N) +"_sigma"+ format_double(sigma) +".txt"); // FIXED: was x_b
 return 0;
 }
 
@@ -107,13 +106,13 @@ vector<double> epsilon(N+4,0.0);
 vector<double> p(N+4,0.0);
 vector<double> xb(N+4,0.0);
 vector<double> xa(N+4,0.0);
-// cell borders
 
+// cell borders
 for(int i = 0; i <= N; i++){
    xa[i+2] = x_min + (i)*dx;
 }
-// cell centers
 
+// cell centers
 for(int i = 0; i < N; i++){
    xb[i+2] = x_min + 0.5*dx + i*dx;
 }
@@ -134,19 +133,19 @@ for(int i = 0; i < N; i++){
      }
  }
 
-vector<vector<double>> result = library::solve_shocktube(rho, u, epsilon, p, N, dt, dx, t_max, gamma);
+vector<vector<double>> output2 = library::solve_shocktube(rho, u, epsilon, p, N, dt, dx, t_max, gamma);
 
 vector<double> temp(N+4);
 for(int j = 0; j < N+4; j++){
-    temp[j] = result[2][j] * (gamma -1);
+    temp[j] = output2[2][j] * (gamma -1);
 }
-write_to_file(result[0], "output2/rho.txt");
-write_to_file(result[1], "output2/u.txt");
-write_to_file(result[2], "output2/epsilon.txt");
-write_to_file(result[3], "output2/p.txt");
-write_to_file(result[4], "output2/sigma_max.txt");
-write_to_file(temp, "output2/T.txt");
-write_to_file(xb, "output2/xb.txt");
+to_file(output2[0], "output2/rho.txt");
+to_file(output2[1], "output2/u.txt");
+to_file(output2[2], "output2/epsilon.txt");
+to_file(output2[3], "output2/p.txt");
+to_file(output2[4], "output2/sigma_max.txt");
+to_file(temp, "output2/T.txt");
+to_file(xb, "output2/xb.txt");
 
 return 0;
 }
