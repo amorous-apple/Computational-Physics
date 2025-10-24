@@ -1,0 +1,227 @@
+[
+  {
+    "arguments": [
+      "/nix/store/kaj8d1zcn149m40s9h0xi0khakibiphz-gcc-wrapper-14.3.0/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-fopenmp",
+      "-c",
+      "-o",
+      "build/main.o",
+      "main.c"
+    ],
+    "directory": "/home/conglong/Documents/Uni/jahr5-semester09/computationalPhysics/projects/01-nbody/code/simulation",
+    "file": "/home/conglong/Documents/Uni/jahr5-semester09/computationalPhysics/projects/01-nbody/code/simulation/main.c",
+    "output": "/home/conglong/Documents/Uni/jahr5-semester09/computationalPhysics/projects/01-nbody/code/simulation/build/main.o"
+  },
+  {
+    "arguments": [
+      "/nix/store/kaj8d1zcn149m40s9h0xi0khakibiphz-gcc-wrapper-14.3.0/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-fopenmp",
+      "-c",
+      "-o",
+      "build/lib/calc_accel.o",
+      "lib/calc_accel.c"
+    ],
+    "directory": "/home/conglong/Documents/Uni/jahr5-semester09/computationalPhysics/projects/01-nbody/code/simulation",
+    "file": "/home/conglong/Documents/Uni/jahr5-semester09/computationalPhysics/projects/01-nbody/code/simulation/lib/calc_accel.c",
+    "output": "/home/conglong/Documents/Uni/jahr5-semester09/computationalPhysics/projects/01-nbody/code/simulation/build/lib/calc_accel.o"
+  },
+  {
+    "arguments": [
+      "/nix/store/kaj8d1zcn149m40s9h0xi0khakibiphz-gcc-wrapper-14.3.0/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-fopenmp",
+      "-c",
+      "-o",
+      "build/lib/calc_angmoment.o",
+      "lib/calc_angmoment.c"
+    ],
+    "directory": "/home/conglong/Documents/Uni/jahr5-semester09/computationalPhysics/projects/01-nbody/code/simulation",
+    "file": "/home/conglong/Documents/Uni/jahr5-semester09/computationalPhysics/projects/01-nbody/code/simulation/lib/calc_angmoment.c",
+    "output": "/home/conglong/Documents/Uni/jahr5-semester09/computationalPhysics/projects/01-nbody/code/simulation/build/lib/calc_angmoment.o"
+  },
+  {
+    "arguments": [
+      "/nix/store/kaj8d1zcn149m40s9h0xi0khakibiphz-gcc-wrapper-14.3.0/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-fopenmp",
+      "-c",
+      "-o",
+      "build/lib/calc_ener.o",
+      "lib/calc_ener.c"
+    ],
+    "directory": "/home/conglong/Documents/Uni/jahr5-semester09/computationalPhysics/projects/01-nbody/code/simulation",
+    "file": "/home/conglong/Documents/Uni/jahr5-semester09/computationalPhysics/projects/01-nbody/code/simulation/lib/calc_ener.c",
+    "output": "/home/conglong/Documents/Uni/jahr5-semester09/computationalPhysics/projects/01-nbody/code/simulation/build/lib/calc_ener.o"
+  },
+  {
+    "arguments": [
+      "/nix/store/kaj8d1zcn149m40s9h0xi0khakibiphz-gcc-wrapper-14.3.0/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-fopenmp",
+      "-c",
+      "-o",
+      "build/lib/constants.o",
+      "lib/constants.c"
+    ],
+    "directory": "/home/conglong/Documents/Uni/jahr5-semester09/computationalPhysics/projects/01-nbody/code/simulation",
+    "file": "/home/conglong/Documents/Uni/jahr5-semester09/computationalPhysics/projects/01-nbody/code/simulation/lib/constants.c",
+    "output": "/home/conglong/Documents/Uni/jahr5-semester09/computationalPhysics/projects/01-nbody/code/simulation/build/lib/constants.o"
+  },
+  {
+    "arguments": [
+      "/nix/store/kaj8d1zcn149m40s9h0xi0khakibiphz-gcc-wrapper-14.3.0/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-fopenmp",
+      "-c",
+      "-o",
+      "build/lib/execute.o",
+      "lib/execute.c"
+    ],
+    "directory": "/home/conglong/Documents/Uni/jahr5-semester09/computationalPhysics/projects/01-nbody/code/simulation",
+    "file": "/home/conglong/Documents/Uni/jahr5-semester09/computationalPhysics/projects/01-nbody/code/simulation/lib/execute.c",
+    "output": "/home/conglong/Documents/Uni/jahr5-semester09/computationalPhysics/projects/01-nbody/code/simulation/build/lib/execute.o"
+  },
+  {
+    "arguments": [
+      "/nix/store/kaj8d1zcn149m40s9h0xi0khakibiphz-gcc-wrapper-14.3.0/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-fopenmp",
+      "-c",
+      "-o",
+      "build/lib/initialize.o",
+      "lib/initialize.c"
+    ],
+    "directory": "/home/conglong/Documents/Uni/jahr5-semester09/computationalPhysics/projects/01-nbody/code/simulation",
+    "file": "/home/conglong/Documents/Uni/jahr5-semester09/computationalPhysics/projects/01-nbody/code/simulation/lib/initialize.c",
+    "output": "/home/conglong/Documents/Uni/jahr5-semester09/computationalPhysics/projects/01-nbody/code/simulation/build/lib/initialize.o"
+  },
+  {
+    "arguments": [
+      "/nix/store/kaj8d1zcn149m40s9h0xi0khakibiphz-gcc-wrapper-14.3.0/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-fopenmp",
+      "-c",
+      "-o",
+      "build/lib/utils_data.o",
+      "lib/utils_data.c"
+    ],
+    "directory": "/home/conglong/Documents/Uni/jahr5-semester09/computationalPhysics/projects/01-nbody/code/simulation",
+    "file": "/home/conglong/Documents/Uni/jahr5-semester09/computationalPhysics/projects/01-nbody/code/simulation/lib/utils_data.c",
+    "output": "/home/conglong/Documents/Uni/jahr5-semester09/computationalPhysics/projects/01-nbody/code/simulation/build/lib/utils_data.o"
+  },
+  {
+    "arguments": [
+      "/nix/store/kaj8d1zcn149m40s9h0xi0khakibiphz-gcc-wrapper-14.3.0/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-fopenmp",
+      "-c",
+      "-o",
+      "build/lib/utils_vec.o",
+      "lib/utils_vec.c"
+    ],
+    "directory": "/home/conglong/Documents/Uni/jahr5-semester09/computationalPhysics/projects/01-nbody/code/simulation",
+    "file": "/home/conglong/Documents/Uni/jahr5-semester09/computationalPhysics/projects/01-nbody/code/simulation/lib/utils_vec.c",
+    "output": "/home/conglong/Documents/Uni/jahr5-semester09/computationalPhysics/projects/01-nbody/code/simulation/build/lib/utils_vec.o"
+  },
+  {
+    "arguments": [
+      "/nix/store/kaj8d1zcn149m40s9h0xi0khakibiphz-gcc-wrapper-14.3.0/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-fopenmp",
+      "-c",
+      "-o",
+      "build/lib/integrators/int_euler.o",
+      "lib/integrators/int_euler.c"
+    ],
+    "directory": "/home/conglong/Documents/Uni/jahr5-semester09/computationalPhysics/projects/01-nbody/code/simulation",
+    "file": "/home/conglong/Documents/Uni/jahr5-semester09/computationalPhysics/projects/01-nbody/code/simulation/lib/integrators/int_euler.c",
+    "output": "/home/conglong/Documents/Uni/jahr5-semester09/computationalPhysics/projects/01-nbody/code/simulation/build/lib/integrators/int_euler.o"
+  },
+  {
+    "arguments": [
+      "/nix/store/kaj8d1zcn149m40s9h0xi0khakibiphz-gcc-wrapper-14.3.0/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-fopenmp",
+      "-c",
+      "-o",
+      "build/lib/integrators/int_eulercrom.o",
+      "lib/integrators/int_eulercrom.c"
+    ],
+    "directory": "/home/conglong/Documents/Uni/jahr5-semester09/computationalPhysics/projects/01-nbody/code/simulation",
+    "file": "/home/conglong/Documents/Uni/jahr5-semester09/computationalPhysics/projects/01-nbody/code/simulation/lib/integrators/int_eulercrom.c",
+    "output": "/home/conglong/Documents/Uni/jahr5-semester09/computationalPhysics/projects/01-nbody/code/simulation/build/lib/integrators/int_eulercrom.o"
+  },
+  {
+    "arguments": [
+      "/nix/store/kaj8d1zcn149m40s9h0xi0khakibiphz-gcc-wrapper-14.3.0/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-fopenmp",
+      "-c",
+      "-o",
+      "build/lib/integrators/int_hermite.o",
+      "lib/integrators/int_hermite.c"
+    ],
+    "directory": "/home/conglong/Documents/Uni/jahr5-semester09/computationalPhysics/projects/01-nbody/code/simulation",
+    "file": "/home/conglong/Documents/Uni/jahr5-semester09/computationalPhysics/projects/01-nbody/code/simulation/lib/integrators/int_hermite.c",
+    "output": "/home/conglong/Documents/Uni/jahr5-semester09/computationalPhysics/projects/01-nbody/code/simulation/build/lib/integrators/int_hermite.o"
+  },
+  {
+    "arguments": [
+      "/nix/store/kaj8d1zcn149m40s9h0xi0khakibiphz-gcc-wrapper-14.3.0/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-fopenmp",
+      "-c",
+      "-o",
+      "build/lib/integrators/int_hermite_it.o",
+      "lib/integrators/int_hermite_it.c"
+    ],
+    "directory": "/home/conglong/Documents/Uni/jahr5-semester09/computationalPhysics/projects/01-nbody/code/simulation",
+    "file": "/home/conglong/Documents/Uni/jahr5-semester09/computationalPhysics/projects/01-nbody/code/simulation/lib/integrators/int_hermite_it.c",
+    "output": "/home/conglong/Documents/Uni/jahr5-semester09/computationalPhysics/projects/01-nbody/code/simulation/build/lib/integrators/int_hermite_it.o"
+  },
+  {
+    "arguments": [
+      "/nix/store/kaj8d1zcn149m40s9h0xi0khakibiphz-gcc-wrapper-14.3.0/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-fopenmp",
+      "-c",
+      "-o",
+      "build/lib/integrators/int_middle.o",
+      "lib/integrators/int_middle.c"
+    ],
+    "directory": "/home/conglong/Documents/Uni/jahr5-semester09/computationalPhysics/projects/01-nbody/code/simulation",
+    "file": "/home/conglong/Documents/Uni/jahr5-semester09/computationalPhysics/projects/01-nbody/code/simulation/lib/integrators/int_middle.c",
+    "output": "/home/conglong/Documents/Uni/jahr5-semester09/computationalPhysics/projects/01-nbody/code/simulation/build/lib/integrators/int_middle.o"
+  },
+  {
+    "arguments": [
+      "/nix/store/kaj8d1zcn149m40s9h0xi0khakibiphz-gcc-wrapper-14.3.0/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-fopenmp",
+      "-c",
+      "-o",
+      "build/lib/integrators/int_velver.o",
+      "lib/integrators/int_velver.c"
+    ],
+    "directory": "/home/conglong/Documents/Uni/jahr5-semester09/computationalPhysics/projects/01-nbody/code/simulation",
+    "file": "/home/conglong/Documents/Uni/jahr5-semester09/computationalPhysics/projects/01-nbody/code/simulation/lib/integrators/int_velver.c",
+    "output": "/home/conglong/Documents/Uni/jahr5-semester09/computationalPhysics/projects/01-nbody/code/simulation/build/lib/integrators/int_velver.o"
+  }
+]

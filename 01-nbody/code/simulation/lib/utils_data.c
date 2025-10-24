@@ -53,7 +53,7 @@ FILE* openFileout(void) {
 FILE* openFileoutCalc(void) {
     FILE* pfile2 = fopen(params.fileoutCalc, "a");
     if (pfile2 == NULL) {
-        perror("Error opening output file.\n");
+        perror("Error opening output file in Calc.\n");
         exit(EXIT_FAILURE);
     }
     return pfile2;
