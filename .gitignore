@@ -7,3 +7,5 @@
 *.synctex.gz
 *.o
 *.out
+.ccls-cache/
+**/.ccls-cache/
