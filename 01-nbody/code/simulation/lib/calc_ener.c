@@ -3,10 +3,12 @@
 double calc_ener(Particle* Collection) {
     double total_ener = 0.0;
 
+#pragma omp parallel for
     for (int i = 0; i < params.lineCount; i++) {
         // Calculating and adding the kinetic energy components for particle i
         total_ener += (1.0 / 2.0) * Collection[i].mass *
                       pow(vec_mag(Collection[i].vel), 2);
+    }
 
 // Calculating and adding the gravitational potential
 // energy for every particle
@@ -28,12 +30,9 @@ double calc_ener(Particle* Collection) {
                 if (separation < 1E-6) {
                     continue;
                 } else {
-                    double inv_separation = 1.0 / separation;
-                    total_ener += (Collection[i].mass * Collection[j].mass) *
-                                  inv_separation;
+                    total_ener += (Collection[i].mass * Collection[j].mass) / separation;
                 }
             }
         }
-    }
     return total_ener;
 }

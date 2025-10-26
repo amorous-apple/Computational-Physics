@@ -21,6 +21,10 @@
           gef # extension of gdb
           valgrind # memory debugger
           bear # generated a compilation database
+
+          python3 # for plotting
+          python312Packages.pandas
+          python312Packages.matplotlib
         ];
 
         shellHook = ''
