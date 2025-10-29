@@ -24,7 +24,9 @@
 
           python3 # for plotting
           python312Packages.pandas
+          python312Packages.numpy
           python312Packages.matplotlib
+          python312Packages.imageio
         ];
 
         shellHook = ''

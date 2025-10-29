@@ -11,7 +11,8 @@
 
 Parameters params;
 
-int main(int argc, char *argv[]) {
+int main(int argc, char *argv[])
+{
   def_params(argc, argv);
 
   // Initializaing a collection of data from the file
@@ -23,6 +24,7 @@ int main(int argc, char *argv[]) {
 
   Particle *temp;
 
+  // Removing existing data files and creating new ones to write data
   remove(params.fileout);
   FILE *fileout = openFileout();
   remove(params.fileoutCalc);
@@ -47,7 +49,7 @@ int main(int argc, char *argv[]) {
     // Using Collection1 to write the next set of data to Collection2
     choose_integrator(Collection1, Collection2);
 
-    // Collection1 = Collection2
+    // Swapping the buffers so that Collection1 has the new data and Collection 2 the old data
     temp = Collection2;
     Collection2 = Collection1;
     Collection1 = temp;
