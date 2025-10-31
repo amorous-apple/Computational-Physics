@@ -3,9 +3,9 @@ import pandas as pd
 import os
 
 headers = ["t", "J", "E"]
-bodies = ["2body", "3body"]
-integrators = ["euler", "eulercrom", "hermite", "hermite_it", "velver"]
-timesteps = ["0.1", "0.5"]  # technically omitting one 0.1 hermite
+bodies = ["2body", "3body", "100body"]
+integrators = ["euler", "eulercrom", "hermite", "velver"]
+timesteps = ["0.01", "0.1", "0.5"]  # technically omitting one 0.1 hermite
 
 for b in bodies:
     for i in integrators:

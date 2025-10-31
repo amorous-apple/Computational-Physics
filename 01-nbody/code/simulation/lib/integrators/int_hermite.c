@@ -29,32 +29,28 @@ void calc_hermite(Particle* Collection1, Particle* Collection2)
 
   Vector* Accel_p = calc_acc(Collection2);
   Vector* Jerk_p = calc_jerk(Collection2);
-
   // Correction step
   for (int i = 0; i < params.lineCount; i++) {
-    // Helper terms for calculation of higher order position derivatives a^(2) and a^(3)
-    Vector deltaA = vec_sub(Accel[i], Accel_p[i]);
-    Vector twoJ = vec_scalProd(2, Jerk[i]);
-    Vector twoJ_plus_Jp = vec_add(twoJ, Jerk_p[i]);
-
-    // Velocity correction
-    Vector termA_v = vec_scalProd(dt, deltaA);
-    Vector termB_v = vec_scalProd(dt2 / 3.0, twoJ_plus_Jp);
-    Vector termC_v = vec_scalProd(
-                       0.25, vec_add(vec_scalProd(2 * dt, deltaA),
-                                     vec_scalProd(dt2, vec_add(Jerk[i], Jerk_p[i]))));
-    Collection2[i].vel = vec_sub(
-                           Collection2[i].vel, vec_sub(vec_add(termA_v, termB_v), termC_v));
-
-    // Position correction
-    Vector termA_p = vec_scalProd(dt2 / 4.0, deltaA);
-    Vector termB_p = vec_scalProd(dt3 / 12.0, twoJ_plus_Jp);
-    Vector termC_p = vec_scalProd(
-                       1.0 / 20.0,
-                       vec_add(vec_scalProd(2 * dt2, deltaA),
-                               vec_scalProd(dt3, vec_add(Jerk[i], Jerk_p[i]))));
-    Collection2[i].pos = vec_sub(
-                           Collection2[i].pos, vec_sub(vec_add(termA_p, termB_p), termC_p));
+    // Correct velocity
+    Collection2[i].vel =
+      vec_add(Collection2[i].vel,
+              vec_scalProd(1.0 / 12.0,
+                           vec_add(vec_scalProd(-6.0 * dt, Accel[i]),
+                                   vec_add(vec_scalProd(6.0 * dt, Accel_p[i]),
+                                           vec_add(vec_scalProd(-5.0 * dt2, Jerk[i]),
+                                             vec_scalProd(-1.0 * dt2, Jerk_p[i]))))
+                          )
+             );
+    // Correct position
+    Collection2[i].pos =
+      vec_add(Collection2[i].pos,
+              vec_scalProd(1.0 / 60.0,
+                           vec_add(vec_scalProd(-9.0 * dt2, Accel[i]),
+                                   vec_add(vec_scalProd(9.0 * dt2, Accel_p[i]),
+                                           vec_add(vec_scalProd(-7.0 * dt3, Jerk[i]),
+                                             vec_scalProd(-2.0 * dt3, Jerk_p[i]))))
+                          )
+             );
   }
 
   free(Accel);
