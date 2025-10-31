@@ -61,5 +61,14 @@ Some rearranging and substitution results in the following for the corrected
 velocity and position:
 $
   v _(n+1) ^(c) &= v _(n+1) ^(p) + 1/12 (-6 a _(n) Delta t + 6 a _(n+1) ^(p) Delta t - 5 dot(a)_(n) Delta t^2 - dot(a) _(n+1) ^(p) Delta t^2) \
-  r _(n+1) ^(c) &= r _(n+1) ^(p) + 1/60 ( - 9 a _(n) Delta t^2 + 9 a _(n+1 ) ^(p) Delta t^2 - 7 dot(a) _(n) Delta t^3 - 2 dot(a) _(n+1) ^(p) Delta t^3 ) \
+  r _(n+1) ^(c) &= r _(n+1) ^(p) + 1/60 ( - 9 a _(n) Delta t^2 + 9 a _(n+1 ) ^(p) Delta t^2 - 7 dot(a) _(n) Delta t^3 - 2 dot(a) _(n+1) ^(p) Delta t^3 ). \
+$
+
+A modified version of the Hermite integrator, known as the iterated Hermite
+integrator can be achieved by first calculating the corrected velocity and using
+it to calculated the predicted position, creating a set of equations with the
+following form:
+$
+  v_(n+1) ^(c) &= v_(n) + 1/2 (a_(n+1) ^(p) + a_(n) ) Delta t + 1/12 (dot(a)_(n+1) ^(p) - dot(a)_(n) ) Delta t^2 \
+  r_(n+1) ^(c) &= r_(n) + 1/2 (v_(n+1) ^(c) + v_(n) ) Delta t + 1/12 (a_(n+1) ^(p) - a_(n) ) Delta t^2 \
 $

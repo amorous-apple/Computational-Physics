@@ -1,6 +1,6 @@
 #include "constants.h"
 
-const double TIMEMAX = 300;
+const double TIMEMAX = 10;
 
 void def_params(int argc, char* argv[])
 {

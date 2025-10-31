@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import os
 
 # --- CONFIG ---
-input_file = "./../3body_hermite_0.1.csv"
+input_file = "./../3body_heun_0.01.csv"
 frames_dir = "frames"
 frameSkip = 2  # <-- change this to skip every N frames
 os.makedirs(frames_dir, exist_ok=True)
@@ -17,7 +17,7 @@ blocks = [b for b in raw.split("\n\n") if b.strip()]
 timesteps = [np.loadtxt(block.splitlines(), delimiter=",") for block in blocks]
 
 # --- PLOT SETUP (reuse figure) ---
-lim = 1.1 * np.max([np.abs(t[:, 1:4]).max() for t in timesteps])  # fixed 1:2 → 1:4
+lim = 1.1 * np.max([np.abs(t[:, 1:4]).max() for t in timesteps])
 fig = plt.figure(figsize=(6, 6))
 ax = fig.add_subplot(111, projection="3d")
 
