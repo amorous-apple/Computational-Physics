@@ -72,3 +72,7 @@ $
   v_(n+1) ^(c) &= v_(n) + 1/2 (a_(n+1) ^(p) + a_(n) ) Delta t + 1/12 (dot(a)_(n+1) ^(p) - dot(a)_(n) ) Delta t^2 \
   r_(n+1) ^(c) &= r_(n) + 1/2 (v_(n+1) ^(c) + v_(n) ) Delta t + 1/12 (a_(n+1) ^(p) - a_(n) ) Delta t^2 \
 $
+
+= Evaluation
+== Two-Body Calculations
+== N-Body Calculations

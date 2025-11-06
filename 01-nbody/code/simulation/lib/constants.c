@@ -1,6 +1,6 @@
 #include "constants.h"
 
-const double TIMEMAX = 10;
+const double TIMEMAX = 100;
 
 void def_params(int argc, char* argv[])
 {
@@ -19,6 +19,12 @@ void def_params(int argc, char* argv[])
   params.fileout = create_fileout(argv[1], argv[2], argv[3]);
   params.fileoutCalc = create_fileoutCalc(argv[1], argv[2], argv[3]);
   params.MAX_LINE_LENGTH = 256;
+  // Defining a starting energy value for later calculation
+  params.startingEnergy = 0.0;
+  // Defining a starting Runge-Lenz vector value for later calculation
+  params.startingRgVec = 0.0;
+  // Defining a starting semimajor axis value for later calculation
+  params.startingSemi = 0.0;
 }
 
 int calc_secUsed(clock_t start, clock_t end)

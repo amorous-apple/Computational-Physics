@@ -16,10 +16,12 @@ void choose_integrator(Particle* Collection1, Particle* Collection2)
     calc_hermite_it(Collection1, Collection2);
   } else if (strcmp(params.integrator, "heun") == 0) {
     calc_heun(Collection1, Collection2);
+  } else if (strcmp(params.integrator, "rk4") == 0) {
+    calc_rk4(Collection1, Collection2);
   } else {
     printf("Invalid integrator. Try again m9\n");
     printf(
-      "Valid options include: 'euler', 'eulercrom', 'mid', 'velver', 'hermite', hermite_it', and 'heun' \n");
+      "Valid options include: 'euler', 'eulercrom', 'mid', 'velver', 'hermite', hermite_it', 'heun', and rk4 \n");
     exit(EXIT_FAILURE);
   }
 }

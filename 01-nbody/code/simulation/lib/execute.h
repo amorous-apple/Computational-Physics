@@ -11,6 +11,7 @@
 #include "integrators/int_hermite_it.h"
 #include "integrators/int_heun.h"
 #include "integrators/int_middle.h"
+#include "integrators/int_rk4.h"
 #include "integrators/int_velver.h"
 
 void choose_integrator(Particle *Collection1, Particle *Collection2);

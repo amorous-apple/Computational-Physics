@@ -4,6 +4,8 @@
 
 #include "lib/calc_angmoment.h"
 #include "lib/calc_ener.h"
+#include "lib/calc_rgVec.h"
+#include "lib/calc_semi.h"
 #include "lib/constants.h"
 #include "lib/execute.h"
 #include "lib/initialize.h"
@@ -30,21 +32,45 @@ int main(int argc, char *argv[])
   remove(params.fileoutCalc);
   FILE *fileoutCalc = openFileoutCalc();
 
+  // Calculating an initial energy for later calculations
+  params.startingEnergy = calc_ener(Collection1);
+
+  // Initializing the Runge-Lenz vector and semi-major axis for a 2-body system
+  if (params.lineCount == 2) {
+    // Calculating the initial Runge-Lenz vector for later calculations
+    params.startingRgVec = calc_rgVec(Collection1);
+    // Calculating the initial semi-major axis for later calculations
+    params.startingSemi = calc_semi(Collection1);
+  } else {
+    params.startingRgVec = -1.0;
+    params.startingSemi = -1.0;
+  }
+
   for (int i = 0; i <= params.stepCount; i++) {
 
     double timeCurrent = 0.0 + i * params.timeStep;
     // Writing the data of every particle to fileout
     data_write(Collection1, fileout, timeCurrent);
 
-    // Calculating the angular moment of the system
-    Vector angmoment = calc_angmoment(Collection1);
-    double mag_angmoment = vec_mag(angmoment);
 
-    // Calculating the energy of the system
-    double energy = calc_ener(Collection1);
+    // Calculating the energy change of the system
+    double energy = calc_enerChange(Collection1);
+
+    // Calculating the Runge-Lenz vector and semi-major axis for a 2-body system
+    double rgVec;
+    double semi;
+    if (params.lineCount == 2) {
+      // Calculating the rgVec change of the system
+      rgVec = calc_rgVecChange(Collection1);
+      // Calculating the semi-major axis change of the system
+      semi = calc_semiChange(Collection1);
+    } else {
+      rgVec = -1.0;
+      semi = -1.0;
+    }
 
     // Writing the calculated data for the time step to fileoutCalc
-    data_writeCalc(mag_angmoment, energy, fileoutCalc, timeCurrent);
+    data_writeCalc(rgVec, energy, semi, fileoutCalc, timeCurrent);
 
     // Using Collection1 to write the next set of data to Collection2
     choose_integrator(Collection1, Collection2);

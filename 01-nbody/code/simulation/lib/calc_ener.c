@@ -37,3 +37,16 @@ double calc_ener(Particle* Collection)
   }
   return total_ener;
 }
+
+// Calculating |(E - Estart) / Estart| to see the change in energy over time
+double calc_enerChange(Particle *Collection1)
+{
+  double energy = calc_ener(Collection1);
+  if (fabs(energy) < 1e-5) {
+    printf("The energy of Collection1 is very small!\n");
+    printf("Energy: %.8lf\n", energy);
+    printf("Starting Energy: %.8lf\n\n", params.startingEnergy);
+  }
+  return log(fabs((energy - params.startingEnergy) / params.startingEnergy));
+}
+
