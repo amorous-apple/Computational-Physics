@@ -7,9 +7,9 @@ import os
 # 'a' is for the semi-major axis
 plot_headers = ["t", "J", "E", "a"]
 
-bodies = ["2body", "3body", "100body"]
+bodies = ["2body", "3body", "100body", "1kbody"]
 integrators = ["euler", "eulercrom", "velver", "hermite", "hermite_it", "heun", "rk4"]
-timesteps = ["0.01", "0.1"]
+timesteps = ["0.01", "0.05", "0.1", "0.5"]
 
 # Create the plots directory if it doesn't exist
 os.makedirs("./plots", exist_ok=True)
