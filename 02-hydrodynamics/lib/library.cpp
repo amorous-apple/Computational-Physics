@@ -1,7 +1,7 @@
 #include "library.hpp"
 
 
-vector<double> library::advection(const vector<double>& psi, double N, double dt, double dx, const vector<double>& u, double t_max){
+vector<double> library::advection(vector<double> psi, double N , double dt, double dx, vector<double> u, double t_max){
     double t = 0.0;
     vector<double> psi_temp = psi;
     while(t <= t_max){
@@ -53,23 +53,29 @@ double library::calc_delta_rho(vector<double> rho, double N, int i){ // equation
     }
 }
 
-double library::calc_delta_u(const vector<double>& u, double N, int i){ // equation 2.22
-    double num = (u[i+1] - u[i]) * (u[i] - u[i-1]);
-    if (num <= 0.0) return 0.0;
-    double denom = (u[i+1] - u[i-1]);
-    if (std::abs(denom) < 1e-12) return 0.0;
-    return 2.0 * num / denom;
+double library::calc_delta_u(vector<double> u, double N, int i){ // equation 2.22
+    double temp = ((u[i+1] - u[i])*(u[i] - u[i-1]));
+    if(temp > 0.0){
+        double delta_u = 2.0*temp/(u[i+1] - u[i-1]) + 1e-10;
+        return delta_u;
+    }
+    else{
+        return 0.0;
+    }
 }
 
-double library::calc_delta_epsilon(const vector<double>& epsilon, double N, int i){  // equation 2.29
-    double num = (epsilon[i+1] - epsilon[i]) * (epsilon[i] - epsilon[i-1]);
-    if (num <= 0.0) return 0.0;
-    double denom = (epsilon[i+1] - epsilon[i-1]);
-    if (std::abs(denom) < 1e-12) return 0.0;
-    return 2.0 * num / denom;
+double library::calc_delta_epsilon(vector<double> epsilon, double N, int i){  // equation 2.29
+    double temp = ((epsilon[i+1] - epsilon[i])*(epsilon[i] - epsilon[i-1]));
+    if(temp > 0.0){
+        double delta_epsilon = 2.0*temp/(epsilon[i+1] - epsilon[i-1]) + 1e-10;
+        return delta_epsilon;
+    }
+    else{
+        return 0.0;
+    }
 }
 
-vector<double> library::rho_advection(const vector<double>& rho, double N , double dt, double dx, const vector<double>& u){
+vector<double> library::rho_advection(vector<double> rho, double N , double dt, double dx, vector <double> u){
     vector <double> result(int(N)+4,0.0);
     for(int i = 2; i <= int(N)+2; i++){
         if(u[i] > 0.0){
@@ -155,16 +161,21 @@ vector<vector<double>> library::solve_shocktube(vector<double> rho, vector<doubl
         vector<double> p_new = p;
        
         vector<double> courant(N+4,0.0);
-        for(int i = 0; i < N+4; ++i){
-            courant[i] = std::sqrt(gamma * p[i] / rho[i]);
+        for(int i = 0; i < N+4; i++){
+            courant[i] = sqrt(gamma*p[i] / rho[i]);
+            double courant_max =*std::max_element(courant.begin(), courant.end());
+            auto u_minmax = std::minmax_element(u.begin(), u.end());
+            double u_max = 0;
+            if(abs(*u_minmax.first) > abs(*u_minmax.second)){
+                u_max =*u_minmax.first;
+            }
+            else{
+                u_max =*u_minmax.second;
+            }
+            double c_max = courant_max + u_max;
+            double sigma = c_max*dt/dx;
+            sigma_vec.push_back(sigma);
         }
-        double courant_max = *std::max_element(courant.begin(), courant.end());
-        // compute maximum absolute flow speed
-        double u_max = 0.0;
-        for (int i = 0; i < N+4; ++i) u_max = std::max(u_max, std::abs(u[i]));
-        double c_max = courant_max + u_max;
-        double sigma = c_max * dt / dx;
-        sigma_vec.push_back(sigma);
         // flux
         vector<vector<double>> F = calc_F(rho, u, epsilon, N, dt, dx);
         
