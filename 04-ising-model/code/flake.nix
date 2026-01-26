@@ -24,12 +24,14 @@
         # TOOLS: Python and plotting libraries
         # We use 'packages' here because these are utilities to run,
         # not libraries your Rust code needs to compile/link against.
-        packages = with pkgs; [
-          python3
-          python312Packages.pandas
-          python312Packages.numpy
-          python312Packages.matplotlib
-          python312Packages.imageio
+        packages = [
+          (pkgs.python3.withPackages (
+            p: with p; [
+              numpy
+              pandas
+              matplotlib
+            ]
+          ))
         ];
 
         # LIBRARIES & BUILD DEPS: Rust compilation needs
