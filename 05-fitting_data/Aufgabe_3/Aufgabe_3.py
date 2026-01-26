@@ -9,7 +9,7 @@ def polynom(x,*coeff):
         y += a * x**i
     return y
 def legendre_Pn(x,n):
-    y = 0
+    y = np.zeros_like(x)
     for i in range(0,m.floor(n/2)+1):
         y += ((-1)**i)*((m.factorial(2*n-2*i))/(m.factorial(n-i) * m.factorial(n-2*i) * m.factorial(i) * 2**n)) * x **(n-2*i)
     return y
@@ -43,9 +43,16 @@ deg = 9
 # plot
 plt.figure("Aufgabe_3_polynom_fit", figsize=(10,8))
 plt.plot(data[0,:],data[1,:],'x',label='Messwerte')
-for i in range(0,deg):
-    popt,pcov = curve_fit(polynom,data[0,:],data[1,:],p0=np.ones(i+1))
-    plt.plot(x_fit,polynom(x_fit,*popt),label=fr'Polynom {i}. Ordnung, $\chi^2_{{red.}}$ = {chi2_polynom(data[0,:],data[1,:],popt,sigma,polynom):.2f}')
+with open('./Aufgabe_3/parameter.txt', "w") as file:
+    for i in range(deg):
+        popt, pcov = curve_fit(
+            polynom, data[0,:], data[1,:], p0=np.ones(i+1)
+        )
+        file.write(f'curvefit Polynom {i}. Ordnung:\n')
+        file.write(f'  popt = {popt}\n\n')
+
+        plt.plot(x_fit,polynom(x_fit,*popt),label=fr'Polynom {i}. Ordnung, $\chi^2_{{red.}}$ = {chi2_polynom(data[0,:], data[1,:], popt, sigma, polynom):.2f}')
+
 plt.xlabel(r'$cos(\theta)$')
 plt.ylabel("N")
 plt.legend()
@@ -55,9 +62,16 @@ plt.savefig(r"./Aufgabe_3/curve_fit_polynome.png")
 
 plt.figure("Aufgabe3_legendre_fit", figsize=(10,8))
 plt.plot(data[0,:],data[1,:],'x',label='Messwerte')
-for i in range(1,deg):
-    popt,pcov = curve_fit(legendre_polynom,data[0,:],data[1,:],p0=np.ones(i))
-    plt.plot(x_fit,legendre_polynom(x_fit,*popt),label=fr'Legendre Polynom {i}. Ordnung, $\chi^2_{{red.}}$ = {chi2_polynom(data[0,:],data[1,:],popt,sigma,legendre_polynom):.2f}')
+with open('./Aufgabe_3/parameter.txt', "a") as file:
+    for i in range(1,deg):
+        popt,pcov = curve_fit(legendre_polynom,data[0,:],data[1,:],p0=np.ones(i))
+        
+
+        file.write(f'curve_fit Legendre {i}. Ordnung:\n')
+        file.write(f'  popt = {popt}\n\n')
+
+        plt.plot(x_fit,legendre_polynom(x_fit,*popt),label=fr'Legendre Polynom {i}. Ordnung, $\chi^2_{{red.}}$ = {chi2_polynom(data[0,:],data[1,:],popt,sigma,legendre_polynom):.2f}')
+
 plt.xlabel(r'$cos(\theta)$')
 plt.ylabel("N")
 plt.legend()
@@ -67,9 +81,14 @@ plt.savefig(r"./Aufgabe_3/curve_fit_Legendre.png")
 
 plt.figure("Aufgabe3_polynom_fit_inv_matrix", figsize=(10,8))
 plt.plot(data[0,:],data[1,:],'x',label='Messwerte')
-for i in range(1,deg):
-    popt = matrix_inversion_fit(data[0,:],data[1,:],sigma,monom,i)
-    plt.plot(x_fit,polynom(x_fit,*popt),label=fr'Polynom {i}. Ordnung, $\chi^2_{{red.}}$ = {chi2_polynom(data[0,:],data[1,:],popt,sigma,polynom):.2f}')
+with open('./Aufgabe_3/parameter.txt', "a") as file:
+    for i in range(1,deg):
+        popt = matrix_inversion_fit(data[0,:],data[1,:],sigma,monom,i)
+        file.write(f'Matrix Polynom {i}. Ordnung:\n')
+        file.write(f'  popt = {popt}\n\n')
+
+        plt.plot(x_fit,polynom(x_fit,*popt),label=fr'Polynom {i}. Ordnung, $\chi^2_{{red.}}$ = {chi2_polynom(data[0,:],data[1,:],popt,sigma,polynom):.2f}')
+
 plt.xlabel(r'$cos(\theta)$')
 plt.ylabel("N")
 plt.legend()
@@ -79,12 +98,19 @@ plt.savefig(r"./Aufgabe_3/polynom_anpassung_matrix.png")
 
 plt.figure("Aufgabe3_legendre_fit_inv_matrix", figsize=(10,8))
 plt.plot(data[0,:],data[1,:],'x',label='Messwerte')
-for i in range(1,deg):
-    popt = matrix_inversion_fit(data[0,:],data[1,:],sigma,legendre_Pn,i)
-    plt.plot(x_fit,legendre_polynom(x_fit,*popt),label=fr'Polynom {i}. Ordnung, $\chi^2_{{red.}}$ = {chi2_polynom(data[0,:],data[1,:],popt,sigma,legendre_polynom):.2f}')
+with open('./Aufgabe_3/parameter.txt', "a") as file:
+    for i in range(1,deg):
+        popt = matrix_inversion_fit(data[0,:],data[1,:],sigma,legendre_Pn,i)
+        file.write(f'Matrix Legendre {i}. Ordnung:\n')
+        file.write(f'  popt = {popt}\n\n')
+
+        plt.plot(x_fit,legendre_polynom(x_fit,*popt),label=fr'Polynom {i}. Ordnung, $\chi^2_{{red.}}$ = {chi2_polynom(data[0,:],data[1,:],popt,sigma,legendre_polynom):.2f}')
+
 plt.xlabel(r'$cos(\theta)$')
 plt.ylabel("N")
 plt.legend()
 plt.grid()
 plt.title('Legendre Polynom Anpassung durch Matrixinversion')
 plt.savefig(r"./Aufgabe_3/legendre_anpassung_matrix.png")
+
+

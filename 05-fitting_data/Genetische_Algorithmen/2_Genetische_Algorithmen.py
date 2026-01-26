@@ -145,6 +145,28 @@ for i, result in enumerate(results):
     plt.legend()
     plt.savefig(f'./Genetische_Algorithmen/plots2/fit_{n_moden}_moden.png', dpi=150)
 
+with open("./Genetische_Algorithmen/plots2/fit_parameters.tex", "w") as f:
+    f.write("\\begin{table}[h]\n")
+    f.write("\\centering\n")
+    f.write("\\begin{tabular}{c c l}\n")
+    f.write("\\hline\n")
+    f.write("Moden & $\\chi^2$ & Parameter $[a, b, c_i, d_i, e_i]$ \\\\\n")
+    f.write("\\hline\n")
+
+    for r in results:
+        n = r['n_moden']
+        chi2 = r['chi2']
+        X = r['X']
+
+        params = ", ".join(f"{p:.3f}" for p in X)
+
+        f.write(f"{n} & {chi2:.2f} & $[{params}]$ \\\\\n")
+
+    f.write("\\hline\n")
+    f.write("\\end{tabular}\n")
+    f.write("\\caption{Fitparameter der genetischen Sinus-Fits}\n")
+    f.write("\\end{table}\n")
+
 
 # Vergleich der chi2 Werte
 plt.figure("chi2 Vergleich", figsize=(10, 6))
