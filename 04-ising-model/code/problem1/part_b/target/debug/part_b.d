@@ -1,1 +1,0 @@
-/home/conglong/Documents/Uni/jahr5-semester09/computationalPhysics/projects/04-ising-model/code/problem1/part_b/target/debug/part_b: /home/conglong/Documents/Uni/jahr5-semester09/computationalPhysics/projects/04-ising-model/code/problem1/part_b/src/main.rs
