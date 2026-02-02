@@ -67,6 +67,12 @@ $
 $
 We are given the analytical value $I = e^(-1/2) approx 0.606531$ to check our answer.
 
+When checked through numerical and analytical integration methods though, it is found that the value of the integral in the above expression is as follows:
+$
+  integral_(infinity)^(-infinity)"d"t" "cos (t) e^(- t^2 /2) &= sqrt(2 pi) / sqrt(e). \
+$
+This of course would not cancel out with the term $(2 pi)^(-2)$, leading us to conclude that the constant in front contains a mistake and should instead be $(2 pi)^(-1/2)$. When this change is implemented, the integral $I &= e^(-1/2)$ as desired.
+
 We know that the standard normal distribution $f (x)$ is given by
 $
   f (x) & = (1)/(sqrt(2 pi sigma^2) ) e^(- (x - mu)^2 / 2 sigma^2 ). \
@@ -79,9 +85,9 @@ $
 
 Knowing this, we can refactor our given integral as follows:
 $
-  I & = 1 / (2pi)^2 integral_(infinity)^(-infinity)"d"t" "cos (t) e^(- t^2 /2) \
-  &= 1 / (2pi)^(3/2) integral_(infinity)^(-infinity)"d"t" "cos (t) [1 / sqrt(2 pi) e^(- t^2 / 2) ] \
-  &= 1 / (2pi)^(3/2) integral_(infinity)^(-infinity)"d"t" "cos (t) f (t). \
+  I & = 1 / (2pi)^(1/2) integral_(infinity)^(-infinity)"d"t" "cos (t) e^(- t^2 /2) \
+  &= sqrt(2 pi) / sqrt(2 pi) integral_(infinity)^(-infinity)"d"t" "cos (t) [1 / sqrt(2 pi) e^(- t^2 / 2) ] \
+  &= integral_(infinity)^(-infinity)"d"t" "cos (t) f (t). \
 $
 
 $f (x)$ is of course normalized, meaning that

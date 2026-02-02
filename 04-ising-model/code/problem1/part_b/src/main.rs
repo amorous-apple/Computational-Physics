@@ -4,21 +4,18 @@ use rand::{Rng, SeedableRng}; // Import the SeedableRng trait // Import the Stan
 use std::fs::File;
 use std::io::{BufWriter, Write};
 
-const NUM_POINTS: u64 = 10_000;
+const NUM_POINTS: usize = 100_000;
 
-fn main() -> std::io::Result<()> {
+fn main() {
+    // Creating an array to store normally distributed x-values
+    let mut x_arr: [f64; NUM_POINTS] = [0.0; NUM_POINTS];
+
     const TRUE_PI: f64 = std::f64::consts::PI;
 
     // Create a generator seeded with a specific number (e.g., 42)
     let mut rng = StdRng::seed_from_u64(0);
 
-    // Creating the output file and a file-writing-buffer
-    let file_out = File::create("normal_distribution.csv")?;
-    let mut writer = BufWriter::new(file_out);
-
-    writeln!(writer, "iteration,random_num")?;
-
-    for i in (1..=NUM_POINTS).step_by(2) {
+    for i in (0..NUM_POINTS).step_by(2) {
         // Generating two uniformly distributed random numbers and performing a Box-Muller
         // transform to create two normally-distributed random numbers z0 and z1
 
@@ -35,12 +32,54 @@ fn main() -> std::io::Result<()> {
         let z0 = r * theta.cos() + mu;
         let z1 = r * theta.sin() + mu;
 
-        // Writing two random numbers to the buffer
-        writeln!(writer, "{i},{z0}\n{},{z1}", i + 1)?;
+        x_arr[i] = z0;
+        x_arr[i + 1] = z1;
     }
 
-    writer.flush()?;
+    let mut func_arr: [f64; NUM_POINTS] = [0.0; NUM_POINTS];
 
-    println!("Data written to file");
-    Ok(())
+    // Calculating cos(x) for all x-values
+    for i in 0..NUM_POINTS {
+        func_arr[i] = x_arr[i].cos();
+    }
+
+    // // Calculating the average of the array
+    // let integral = func_arr.iter().sum::<f64>() / func_arr.len() as f64;
+    // println!("I: {}", integral);
+
+    let mut integral_estimate_arr: [f64; NUM_POINTS] = [0.0; NUM_POINTS];
+    let mut integral_lnerror_arr: [f64; NUM_POINTS] = [0.0; NUM_POINTS];
+    let mut running_total: f64 = 0.0;
+
+    let integral_val = (-0.5_f64).exp();
+
+    // Writing the data to file
+    let file_out = File::create("integral_error.csv").expect("Error creating file_out");
+    let mut writer = BufWriter::new(file_out);
+
+    writeln!(writer, "iteration,approximation,ln_error").expect("Error writing header to file");
+
+    // Calculating an array of the running integral estimate
+    for i in 0..NUM_POINTS {
+        running_total += func_arr[i];
+        integral_estimate_arr[i] = running_total / (i + 1) as f64;
+
+        integral_lnerror_arr[i] = (integral_estimate_arr[i] - integral_val).abs().ln();
+        // println!(
+        //     "I_{:>3}: {:.8}, {:.8}",
+        //     i, integral_estimate_arr[i], integral_lnerror_arr[i]
+        // );
+
+        writeln!(
+            writer,
+            "{},{},{}",
+            i + 1,
+            integral_estimate_arr[i],
+            integral_lnerror_arr[i]
+        )
+        .expect("Error writing data to file");
+    }
+    writer.flush().expect("Error flushing to buff");
+
+    println!("Data written to integral_error.csv");
 }
