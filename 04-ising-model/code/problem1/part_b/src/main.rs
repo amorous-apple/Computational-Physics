@@ -4,11 +4,11 @@ use rand::{Rng, SeedableRng}; // Import the SeedableRng trait // Import the Stan
 use std::fs::File;
 use std::io::{BufWriter, Write};
 
-const NUM_POINTS: usize = 100_000;
+const NUM_POINTS: usize = 10_000_000;
 
 fn main() {
     // Creating an array to store normally distributed x-values
-    let mut x_arr: [f64; NUM_POINTS] = [0.0; NUM_POINTS];
+    let mut x_arr = vec![0.0_f64; NUM_POINTS];
 
     const TRUE_PI: f64 = std::f64::consts::PI;
 
@@ -36,19 +36,13 @@ fn main() {
         x_arr[i + 1] = z1;
     }
 
-    let mut func_arr: [f64; NUM_POINTS] = [0.0; NUM_POINTS];
+    let mut func_arr = vec![0.0_f64; NUM_POINTS];
 
     // Calculating cos(x) for all x-values
     for i in 0..NUM_POINTS {
         func_arr[i] = x_arr[i].cos();
     }
 
-    // // Calculating the average of the array
-    // let integral = func_arr.iter().sum::<f64>() / func_arr.len() as f64;
-    // println!("I: {}", integral);
-
-    let mut integral_estimate_arr: [f64; NUM_POINTS] = [0.0; NUM_POINTS];
-    let mut integral_lnerror_arr: [f64; NUM_POINTS] = [0.0; NUM_POINTS];
     let mut running_total: f64 = 0.0;
 
     let integral_val = (-0.5_f64).exp();
@@ -62,20 +56,16 @@ fn main() {
     // Calculating an array of the running integral estimate
     for i in 0..NUM_POINTS {
         running_total += func_arr[i];
-        integral_estimate_arr[i] = running_total / (i + 1) as f64;
+        let integral_estimate: f64 = running_total / (i + 1) as f64;
 
-        integral_lnerror_arr[i] = (integral_estimate_arr[i] - integral_val).abs().ln();
-        // println!(
-        //     "I_{:>3}: {:.8}, {:.8}",
-        //     i, integral_estimate_arr[i], integral_lnerror_arr[i]
-        // );
+        let integral_lnerror = (integral_estimate - integral_val).abs().ln();
 
         writeln!(
             writer,
             "{},{},{}",
             i + 1,
-            integral_estimate_arr[i],
-            integral_lnerror_arr[i]
+            integral_estimate,
+            integral_lnerror
         )
         .expect("Error writing data to file");
     }
