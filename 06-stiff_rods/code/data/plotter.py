@@ -2,13 +2,14 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import os
 
-headers = ['t','N', 'N1', 'N2'] 
-
+headers = ['t','N', 'N+', 'N-'] 
+z = 0.56
+c = '056'
 try:
-    data = pd.read_csv("./code/data/plot1.csv",names=headers, skiprows=0, skipfooter=0, engine='python')
+    data = pd.read_csv(f"./code/data/activity_{c}.csv",names=headers, skiprows=0, skipfooter=0, engine='python')
     df = pd.DataFrame(data)
-    df.plot(x='t', xlabel="xlabel", ylabel="ylabel", title="title")
-    plt.savefig("./code/data/plot1.png")
+    df.plot(x='t', xlabel="Anzahl der Schritte", ylabel="Anzahl der Stäbchen", title=f"Thermalisierung mit z={z}", figsize=(8, 5))
+    plt.savefig(f"./code/data/plot{c}.png")
 except:
     print('you might be in the wrong wd, try executing in 06-stiff_rods.')
     print('you are currently in')

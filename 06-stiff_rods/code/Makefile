@@ -5,7 +5,7 @@ LDFLAGS = -lm -fopenmp
 # LDFLAGS = -lm
 
 # Define the executable name and build directory
-EXEC = stiffy.out
+EXEC = stiffRod.out
 BUILD_DIR = build
 
 # List of source files and corresponding object files in the build directory

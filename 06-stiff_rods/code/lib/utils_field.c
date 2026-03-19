@@ -84,7 +84,7 @@ int placeRod(Position rodPosition, char rodType, int **field) {
         for (int j = 1; j < ROD_SIZE - 1; j++) {
             field[mVal][nVal] = 2;
             nVal++;
-            if (nVal > SYSTEM_SIZE - 1) {
+            if (nVal > SYSTEM_SIZE - 1) {    
                 nVal -= SYSTEM_SIZE;
             }
             // Periodic boundary conditions
@@ -155,7 +155,7 @@ int **delRod(Position *rodsH, int *numH, Position *rodsV, int *numV,
         (*numV)--;
     }
 
-    fillField(rodsH, *numH, rodsV, *numV, field);
+    fillField(rodsH, *numH, rodsV, *numV, field); // periodic boundary condition is respected here
 
     return field;
 }

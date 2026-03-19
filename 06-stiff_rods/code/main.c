@@ -52,13 +52,28 @@ int main() {
         if (i % WRITE_INTERVAL == 0) {
             numRods = numH + numV;
             int index = i / WRITE_INTERVAL;
-            printf("i = %ld\n", i - 1);
             // printField(occupancyField);
             Data1[index][0] = i;
             Data1[index][1] = numRods;
             Data1[index][2] = numH;
             Data1[index][3] = numV;
+            if (i % 10000000== 0){
+                printf("i = %lu\n", i);
+            }
         }
+        //needed for visualisation
+        //if (i == 10000000){ // step to be visualized
+            //printf("Attention:\n");
+            //for (int i = 0; i < numV; i++) {
+            //    printf("%d %d\n", rodsV[i].posX, rodsV[i].posY);
+            //}
+            //printf("now switching to rodsH\n");
+            //for (int i = 0; i < numH; i++) {
+            //    printf("%d %d\n", rodsH[i].posX, rodsH[i].posY);
+            //}
+        //    positions_write("positionH", rodsH, numH);
+        //    positions_write("positionV", rodsV, numV); 
+        //}
 
         if (fiftyFifty() && randomBit(alphaIns(numRods))) {
             // Adding a stiff rod
@@ -69,9 +84,9 @@ int main() {
                 // printf("Trying to add hRod at (%d, %d)\n", posTemp.posX,
                 //        posTemp.posY);
                 if (testRod(posTemp, 'h', occupancyField)) {
-                    rodsH[numH] = posTemp;
-                    placeRod(rodsH[numH], 'h', occupancyField);
-                    numH++;
+                    rodsH[numH] = posTemp; // keeps track of postion of horizontal rods
+                    placeRod(rodsH[numH], 'h', occupancyField); // adds rod to occupancy field
+                    numH++; // keeps track of number of horizontal rods
                 } else {
                     // printf("Failed to add a rod\n");
                     continue;
@@ -83,9 +98,9 @@ int main() {
                 // printf("Trying to add vRod at (%d, %d)\n", posTemp.posX,
                 //        posTemp.posY);
                 if (testRod(posTemp, 'v', occupancyField)) {
-                    rodsV[numV] = posTemp;
-                    placeRod(rodsV[numV], 'v', occupancyField);
-                    numV++;
+                    rodsV[numV] = posTemp; // keeps track of position of vertical rods
+                    placeRod(rodsV[numV], 'v', occupancyField); // adds rod to occupancy field
+                    numV++; // keeps track of number of vertical rods
                 } else {
                     // printf("Failed to add a rod\n");
                     continue;
@@ -113,7 +128,7 @@ int main() {
         //     Data1[index][3] = numV;
         // }
     }
-    data_write("plot1", Data1);
+    data_write("activity_11", Data1);
 
     free(rodsH);
     free(rodsV);

@@ -27,3 +27,22 @@ void data_write(char *fileBase, unsigned long int **data) {
         fprintf(dstFile, "%s", dataLine);
     }
 }
+
+void positions_write(char *fileBase, Position *rods, int count) {
+    char *filename = create_filename(fileBase);
+    remove(filename);
+
+    FILE *dstFile = fopen(filename, "a");
+    if (dstFile == NULL) {
+        perror("Error opening file");
+        free(filename);
+        exit(EXIT_FAILURE);
+    }
+
+    for (int i = 0; i < count; i++) {
+        fprintf(dstFile, "%d %d\n", rods[i].posX, rods[i].posY);
+    }
+
+    fclose(dstFile);
+    free(filename);
+}
