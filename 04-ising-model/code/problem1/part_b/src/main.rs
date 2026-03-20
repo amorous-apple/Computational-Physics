@@ -1,5 +1,5 @@
 use rand::rngs::StdRng;
-use rand::{Rng, SeedableRng}; // Import the SeedableRng trait // Import the Standard RNG struct
+use rand::{Rng, SeedableRng};
 
 use std::fs::File;
 use std::io::{BufWriter, Write};
@@ -12,7 +12,7 @@ fn main() {
 
     const TRUE_PI: f64 = std::f64::consts::PI;
 
-    // Create a generator seeded with a specific number (e.g., 42)
+    // Creating a generator seeded with a specific number
     let mut rng = StdRng::seed_from_u64(0);
 
     for i in (0..NUM_POINTS).step_by(2) {
@@ -20,8 +20,8 @@ fn main() {
         // transform to create two normally-distributed random numbers z0 and z1
 
         // mu is the desired average of the distribution and sigma the width
-        let mu = 0.0;
-        let sigma = 1.0;
+        let mu: f64 = 0.0;
+        let sigma: f64 = 1.0;
 
         let x = rng.r#gen::<f64>();
         let y = rng.r#gen::<f64>();
@@ -45,7 +45,7 @@ fn main() {
 
     let mut running_total: f64 = 0.0;
 
-    let integral_val = (-0.5_f64).exp();
+    let known_integral_value = (-0.5_f64).exp();
 
     // Writing the data to file
     let file_out = File::create("integral_error.csv").expect("Error creating file_out");
@@ -53,12 +53,12 @@ fn main() {
 
     writeln!(writer, "iteration,approximation,ln_error").expect("Error writing header to file");
 
-    // Calculating an array of the running integral estimate
-    for i in 0..NUM_POINTS {
-        running_total += func_arr[i];
+    // Numerically calculating the integral and its error with the addition of each data point
+    for (i, val) in func_arr.iter().enumerate() {
+        running_total += val;
         let integral_estimate: f64 = running_total / (i + 1) as f64;
 
-        let integral_lnerror = (integral_estimate - integral_val).abs().ln();
+        let integral_lnerror = (integral_estimate - known_integral_value).abs().ln();
 
         writeln!(
             writer,

@@ -32,9 +32,9 @@ The area of a circle is of course
 $
   a & = pi r^2 \
 $
-and that of the unit square is 1. If we center a circle with radius 1 on the origin, then the fraction of the unit square covered by the circle $f$ is given by
+and that of the unit square is 1. If we center a circle with radius $r = 1$ on the origin, then the fraction of the unit square covered by the circle $f$ is given by
 $
-       f & = (pi r^2) / 4 dot 1 / 1 = pi r^2 / 4 \
+       f & = (pi r^2) / 4 \
          & = pi / 4 \
   ==> pi & = 4 f. \
 $
@@ -46,13 +46,13 @@ $
 
 Ergo, we can create a program for this task by generating $q$ random points $(x,y)$ with $x,y in [0 , 1)$, and calculate the number of points within the unit circle $p$, meaning that
 $
-  pi & = (4 p) /q. \
+  pi & = 4f = (4 p) /q. \
 $
-To show convergence for this task with consistent results, a seed-based random number generator was used and the logarithm of percent error was plotted as a function of points used.
+To show convergence for this task with consistent results, a seed-based random number generator is used and the logarithm of the error is plotted as a function of the $log_(10)$ points used.
 
 #figure(
   image("./code/problem1/part_a/convergence_plot.png"),
-  caption: "Plot of Pi Approximation as a function of Points used",
+  caption: "Plot of the error of the Pi Approximation as a function of Points used",
 ) <pi_approximation>
 
 As seen in @pi_approximation, there is a steady decrease in the natural log of the error as a function of $log_10 ("iterations")$, indicating the expected increase in precision following an increase in data points.
@@ -102,7 +102,7 @@ $
 with $N$ being the number of data points used and $x$ being a normally distributed random value.
 
 
-The required normal distribution was realized by using two uniformly generated numbers and a Box-Muller transform. The two random numbers $x,y in (0, 1 ]$ were processed as follows:
+The required normal distribution is realized by using two uniformly generated numbers and a Box-Muller transform. The two random numbers $x,y in (0, 1 ]$ are processed as follows:
 $
       R & = sqrt(- 2 dot ln x) \
   theta & = 2 pi y, \
@@ -124,7 +124,51 @@ $
   Z_1 & = R sin ( theta) + mu. \
 $
 
+Like in `part A`, a seed-based random number generator is used and the logarithm of the error is plotted as a function of the $log_(10)$ points used.
+
+#figure(
+  image("./code/problem1/part_b/convergence_plot.png"),
+  caption: "Plot of the error of the integral approximation as a function of points used",
+) <integral_approximation>
+
+Like in figure @pi_approximation, figure @integral_approximation shows a steady decrease in the error as the number of points used is increased, confirming the methodology of the method used.
 
 == Task 2
+In `Task 2` we are asked to simulate the Ising-Model in two $d = 2$ dimensions with a disappearing external field $h = 0$ and periodic boundary conditions on an $L times L$ grid.
+We are tasked with determining the energy density $epsilon = expval(H)/ L^2$, $expval(m)$, as well as $expval(abs(m))$ as a function of the inverse temperature $beta in [0 , 1]$ through direct summation over all possible configurations. We are asked to use grid sizes $L = 2 , 3, 4$. Finally, we compare the numerical results obtained to the analytical ones found in the lab manual.
+
+To calculate the energy density, we must first calculate the expectation value $expval(H)$. Calculating this expectation value requires performing a weighted sum over all possible states $omega in Omega$ as follows:
+$
+  expval(H) & = sum_(omega in Omega)H (omega) P_(beta) (omega) \
+$
+with $H$ and $P$ being given in the lab manual as
+$
+  H & = - J sum_(expval(x"," y))^() s_(x) s_(y) - h sum_(x in Lambda)^()s_(x) \
+  P_(beta) (omega) &= Z^(-1) e^( -beta H (omega) ) \
+  Z & eq.triple sum_(omega in Omega)^() e^(-beta H (omega) ) = "tr" e^(-beta H) \
+$
+
+with $expval(x"," y)$ denoting the sum over all $s_(x)$ and its $2d$ nearest neighbors $s_(y)$.
+For the purpose of our simulation, we set $J = 1$ and $h = 0$, resulting in the simplified expression.
+
+$
+  H & = - sum_(expval(x"," y))^() s_(x) s_(y). \
+$
+
+In short, we now have
+$
+  expval(H) & = sum_(omega in Omega)^() H (omega) Z^(-1) e^(-beta H (omega) ) \
+            & = Z^(-1) sum_(omega in Omega)^() H e^(-beta H) \
+            & = (sum_(omega in Omega)^() H e^(-beta H)) /
+              (sum_(omega in Omega)^() e^(-beta H)) \
+            & eq.triple E_("sum") / Z. \
+$
+The reason for this refactoring, is that we can now calculate both $E_("sum")$ and $Z$ in a single loop through $omega in Omega$ and divide in the end to obtain $expval(H)$. This saves us from having to run the loop once to calculate $Z$ and then once to calculate the weighted sum.
+
+Once we know $expval(H)$, calculating the energy density $epsilon$ for a grid of size $L$ is trivial:
+$
+  epsilon & = expval(H)/ L^2. \
+$
+
 == Task 3
 == Task 4
