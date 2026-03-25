@@ -3,8 +3,8 @@ import matplotlib.pyplot as plt
 
 dateien = {
     0.56: "./code/data/long_056.csv",
-    0.84: "./code/data/long_084.csv",
-    1.10: "./code/data/long_11.csv",
+    0.84: "./code/data/longest_084.csv",
+    1.10: "./code/data/longest_11.csv",
 }
 
 fig, axes = plt.subplots(nrows=3, ncols=4, figsize=(12, 8))
@@ -12,7 +12,7 @@ fig.suptitle("Histogramme verschiedener z-Werte", fontsize=16)
 
 for i, (z, datei) in enumerate(dateien.items()):
     df = pd.read_csv(datei, header=None, names=["step", "N", "N+", "N-"])
-    df = df.iloc[100:].copy() # skips first 100 lines for thermalisation
+    df = df.iloc[1000:].copy() # skips first 2e7 steps for thermalisation
 
     df["S"] = 0.0
     maske = df["N"] > 0

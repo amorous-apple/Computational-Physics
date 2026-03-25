@@ -7,19 +7,19 @@ M = 64
 L = 8           
 
 dateien = {
-    0.05:  "./code/data/activity_005.csv",
-    0.125: "./code/data/activity_0125.csv",
-    0.25:  "./code/data/activity_025.csv",
-    0.56:  "./code/data/activity_056.csv",
-    0.84:  "./code/data/activity_084.csv",
-    1.10:  "./code/data/activity_11.csv",
-    1.15:  "./code/data/activity_115.csv",
-    1.50:  "./code/data/activity_15.csv",
+    0.05:  "./code/data/activity_005_new.csv",
+    0.125: "./code/data/activity_0125_new.csv",
+    0.25:  "./code/data/activity_025_new.csv",
+    0.56:  "./code/data/activity_056_new.csv",
+    0.84:  "./code/data/activity_084_new.csv",
+    1.10:  "./code/data/activity_11_new.csv",
+    1.15:  "./code/data/activity_115_new.csv",
+    1.50:  "./code/data/activity_15_new.csv",
 }
 
 
 # Anzahl der ersten Zeilen, die verworfen werden
-skip_rows = 100
+skip_rows = 3
 
 
 def standardfehler(x):
@@ -104,8 +104,8 @@ plt.figure(figsize=(8, 6))
 plt.errorbar(
     erg["eta_mean"],
     erg["absS_mean"],
-    xerr=erg["eta_std"],
-    yerr=erg["absS_std"],
+    xerr=erg["eta_sem"],
+    yerr=erg["absS_sem"],
     fmt="o",
     capsize=4
 )
