@@ -418,11 +418,35 @@ Now that we have determined the optimal number of sweeps and multihits to use fo
 
 Looking at the results of the simulation in figure @problem_3a, we see that the computational results very closely match the expected analytical results for energy density and magnetization,while specific heat curve matches what we see given in the lab manual.
 
-
+Furthermore, the numerically calculated results also show the expected change in behavior at the critical temperature $beta approx 0.44$ .
 
 
 === Part B
-In Part B of task 3 we are given $beta = 0.4406868$ and asked to determine the energy density, $expval(m)$, and $expval(m^2)$ with 200,000 sweeps on grids of size $L = {4, 8, 32}$ . We are asked to compare the $L = 4$ results with the exact predictions given in section 5.4 of the lab manual.
+In Part B of task 3 we are given $beta = 0.4406868$ and asked to determine the energy density, $expval(abs(m))$, and $expval(m^2)$ with 200,000 sweeps on grids of size $L = {4, 8, 32}$ . We are asked to compare the $L = 4$ results with the exact predictions given in section 5.4 of the lab manual.
+
+==== Results
+
+In order to better observe the change in energy density, magnetization, and the square of the magnetization, the values were plotted as a function of $L$ over the full range of values.
+
+#figure(
+  image("./code/problem3/problem3_b/plots/plot_task3b_finite_size.png"),
+  caption: [Energy density, magnetization, and the square of magnetization as a function of grid size $L$ .],
+) <plot_3b>
+
+Looking at figure @plot_3b, we see that the energy density increases as a function of grid size, while the expected value of the absolute value of the magnetization and the expected value of the square of the magnetization decreases.
+
+Comparing the results for the $L = 4$ grid with the exact analytical results, we see that they are relatively far away from the exact results, but approach them steadily as grid size is increased.
+
+The analytically-calculated energy density at the critical temperature is approximately $-1.4142$ , which differs by about $0.15$ from the numerically calculated value of $-1.5959$ for $L = 4$ .
+
+
 
 
 == Task 4
+
+=== Part A
+For `Part A` of Task 4 we are asked to repeat Task 3 using the heat bath-algorithm.
+=== Part B
+`Part B` of Task 4 asks us to first select a beta-value in the ferromagnetic phase and to begin with an external magnetic field $h$ . $h$ should then be reduced to $h =0$ at a constant temperature. This process should be repeated for both positive and negative $h$ . We are asked to examine of hysteresis can be observed as $h$ approaches 0.
+=== Part C
+We are asked to determine the magnetization $expval(m)$ and $expval(abs(m))$ as a function of both temperature $beta$ and external field $h$ . These results should be plotted in a 3D phase-diagram.
