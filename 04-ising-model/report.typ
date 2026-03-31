@@ -22,9 +22,9 @@
 
 The programs for this series of problems were written using Rust. A `nix flake` is used to manage the programming environment and necessary dependencies; the programming environment can be entered by running `nix develop` (assuming that `nix` is installed). From there, one can run `cargo run` in any directory containing a Rust project to compile and run the program.
 
-Results can be plotted by running `python3 ./<plotting_script_name>` in the directory containing the corresponding python script.
+Results can be plotted by running `python3 ./<plotting_script_name>` in the directory containing the corresponding python script. Plotting scripts were written by or with help from Google Gemini. None of the code used for simulations or calculations was copy-pasted.
 
-Note: All programs should be run in release mode with `cargo run --release` for optimal performance!
+Note: All simulations should be run in release mode with `cargo run --release` for optimal performance!
 = Tasks
 == Task 1
 === Part A
@@ -431,9 +431,9 @@ In order to better observe the change in energy density, magnetization, and the 
 #figure(
   image("./code/problem3/problem3_b/plots/plot_task3b_finite_size.png"),
   caption: [Energy density, magnetization, and the square of magnetization as a function of grid size $L$ .],
-) <plot_3b>
+) <problem3_b>
 
-Looking at figure @plot_3b, we see that the energy density increases as a function of grid size, while the expected value of the absolute value of the magnetization and the expected value of the square of the magnetization decreases.
+Looking at figure @problem3_b, we see that the energy density increases as a function of grid size, while the expected value of the absolute value of the magnetization and the expected value of the square of the magnetization decreases.
 
 Comparing the results for the $L = 4$ grid with the exact analytical results, we see that they are relatively far away from the exact results, but approach them steadily as grid size is increased.
 
@@ -446,7 +446,71 @@ The analytically-calculated energy density at the critical temperature is approx
 
 === Part A
 For `Part A` of Task 4 we are asked to repeat Task 3 using the heat bath-algorithm.
+
+==== Theory
+
+The heatbath algorithm is given in the lab manual under `listing 5.4`. The expected results for the final simulation are the same, but due to the lack of autocorrelation between states, the final state will be reached with fewer sweeps.
+
+
+==== Part A
+#figure(
+  image(
+    "./code/problem4/problem4_a/problem4_a_a_continued/plots/thermodynamics_L128.png",
+  ),
+  caption: [Energy density, magnetization, and specific heat as  function of $beta$ , now using the heatbath-algorithm for calculation.],
+) <problem_4a_a>
+
+The results in figure @problem_4a_a closely match those of figure @problem_3a, though the peak in the specific heat capacity plot appears to be a bit shorter.
+
+
+==== Part B
+
+We once again implement the heatbath-algorithm and run the simulation and plotting script, resulting in the following.
+
+#figure(
+  image(
+    "./code/problem4/problem4_a/problem4_a_b/plots/plot_task3b_finite_size.png",
+  ),
+  caption: [Energy density, magnetization, and the square magnetization as a function of grid size $L$ , now using the heatbath-algorithm for calculation.],
+) <problem_4a_b>
+
+The results found in figure @problem_4a_b once again closely match those from the previous simulation in figure @problem3_b, showing no significant differences and confirming the validity of the heatbath-algorithm.
+
+
 === Part B
 `Part B` of Task 4 asks us to first select a beta-value in the ferromagnetic phase and to begin with an external magnetic field $h$ . $h$ should then be reduced to $h =0$ at a constant temperature. This process should be repeated for both positive and negative $h$ . We are asked to examine of hysteresis can be observed as $h$ approaches 0.
+
+==== Theory
+Given the heatbath-algorithm presented in the lab manual, the simulation can be made to work for non-zero $h$ -values with a slight modification of the original code.
+
+==== Results
+For our $beta$-value, we elected to use $beta = 0.7$ .
+
+#figure(
+  image("./code/problem4/problem4_b/plots/plot_hysteresis_L128_Beta0.7.png"),
+  caption: [Numerically-derived Hysteresis Plot],
+) <problem4_b>
+
+As seen very clearly in figure @problem4_b, the system displays hysteresis very clearly as it progressively steps through different $h$ -values.
+
+
 === Part C
 We are asked to determine the magnetization $expval(m)$ and $expval(abs(m))$ as a function of both temperature $beta$ and external field $h$ . These results should be plotted in a 3D phase-diagram.
+
+==== Results
+
+#figure(
+  image("./code/problem4/problem4_c/plots/surface_3d_m_L128.png"),
+  caption: [Magnetization as a function of $h$ and $beta$ ],
+) <problem4_c_mag>
+
+#figure(
+  image("./code/problem4/problem4_c/plots/surface_3d_m_abs_L128.png"),
+  caption: [Absolute magnetization as a function of $h$ and $beta$ ],
+) <problem4_c_mag_abs>
+
+Comparing figures @problem4_c_mag and @problem4_c_mag_abs, we firstly see that both the positive and negative magnetization have the same magnitude for $h$ -values of the same magnitude, confirming the expected symmetry. Furthermore, we see the expected magnetization above the critical temperature $beta$.
+
+= Conclusion
+
+The results of all simulations generally follow expected outcomes. Increasing the grid size leads to more precise results and changes in behavior at the critical temperature are clearly observed.
