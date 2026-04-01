@@ -2,11 +2,11 @@
 
 const int SYSTEM_SIZE = 64;
 const int ROD_SIZE = 8;
-const double ACTIVITY = 1.1; // z to be initialized here 0.56, 0.84, 1.1
+const double ACTIVITY = 0.56; // z to be initialized here 0.56, 0.84, 1.1
 const double ACTIVITY_INVERSE = 1.0 / ACTIVITY;
 
-const unsigned long int NUM_STEPS = 4*1e9;
-const int WRITE_INTERVAL = 1e4;
+const unsigned long int NUM_STEPS = 15*1e9;
+const int WRITE_INTERVAL = 1e6;
 const int NUM_DATA_POINTS = (NUM_STEPS / WRITE_INTERVAL) + 1;
 
 void init() {
